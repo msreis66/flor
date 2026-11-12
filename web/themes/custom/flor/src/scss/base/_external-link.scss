@@ -1,0 +1,14 @@
+.ext {
+  position: relative !important;
+  padding-right: 42px !important;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    content: "\f1e1" !important;
+    font-family: $font-family-material-symbols-outlined;
+    font-size: rem(22px);
+    font-weight: $font-weight-base;
+  }
+}

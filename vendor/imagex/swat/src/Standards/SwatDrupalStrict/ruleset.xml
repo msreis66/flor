@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../vendor/squizlabs/php_codesniffer/phpcs.xsd" name="SwatDrupalStrict">
+  <description>ImageX SWAT Drupal Strict coding standards.</description>
+
+  <!-- Base rules -->
+  <rule ref="SwatDrupal" />
+
+  <!--
+   #
+   # In-house Standards
+   #
+  -->
+
+  <!-- Require consistent formatting on alter hook function doc comment -->
+  <rule ref="SwatDrupalStrict.FunctionDefinition.DrupalHookAlter" />
+  <!-- Require consistent formatting on preprocess hook function doc comment -->
+  <rule ref="SwatDrupalStrict.FunctionDefinition.DrupalHookPreprocess" />
+  <!-- Require empty class functions to be defined on a single line -->
+  <rule ref="SwatDrupalStrict.PHP.EmptyFunction" />
+  <!-- Disallow empty statements -->
+  <rule ref="SwatDrupalStrict.PHP.NoEmptyStatement" />
+  <!-- Require simple or complex string variable parsing -->
+  <rule ref="SwatDrupalStrict.PHP.StringVariable" />
+
+  <!--
+   #
+   # Squiz Standards
+   #
+  -->
+
+  <!-- Require one space around logical operators -->
+  <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing" />
+
+  <!-- Disallow commented out code except in Drupal settings files -->
+  <rule ref="Squiz.PHP.CommentedOutCode">
+    <exclude-pattern>*/sites/**/*\.php</exclude-pattern>
+  </rule>
+
+  <!--
+   #
+   # Slevomat Standards
+   #
+  -->
+
+  <!-- Require declare strict types declaration -->
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing" />
+  <!-- Require short ternary operators when possible -->
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator" />
+  <!-- Require attributes to be placed after the doc comment -->
+  <rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment" />
+  <!-- Require empty line between types of class members -->
+  <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing" />
+  <!-- Disallow spaces before a native return type hint -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing" />
+  <!-- Require empty line around class braces -->
+  <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces" />
+  <!-- Require class constructor property promition when possible -->
+  <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion" />
+  <!-- Require long class functions to be defined on multiple lines -->
+  <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature" />
+  <!-- Disallow trailing comma after last argument in function calls -->
+  <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall" />
+  <!-- Require short function calls to be on a single line -->
+  <rule ref="SlevomatCodingStandard.Functions.RequireSingleLineCall" />
+  <!-- Require arrow functions when possible -->
+  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction" />
+  <!-- Disallow loose comparison operators -->
+  <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators" />
+  <!-- Disallow useless inheritdoc -->
+  <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment" />
+  <!-- Disallow useless paranthesis -->
+  <rule ref="SlevomatCodingStandard.PHP.UselessParentheses" />
+  <!-- Disallow useless semicolons -->
+  <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon" />
+  <!-- Disallow useless aliases -->
+  <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias" />
+
+  <!-- Disallow trailing comma in function declarations -->
+  <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration">
+    <properties>
+      <property name="onlySingleLine" value="true" />
+    </properties>
+  </rule>
+
+  <!-- Require class constant visibility modifier -->
+  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
+    <properties>
+      <property name="fixable" value="true" />
+    </properties>
+  </rule>
+
+  <!-- Disallow implicit array creation except in Drupal sites settings -->
+  <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation">
+    <exclude-pattern>*/sites/**/*\.php</exclude-pattern>
+  </rule>
+
+  <!-- Disallow empty lines between uncommented class constants -->
+  <rule ref="SlevomatCodingStandard.Classes.ConstantSpacing">
+    <properties>
+      <property name="maxLinesCountBeforeWithoutComment" value="0" />
+    </properties>
+  </rule>
+
+  <!-- Disallow empty lines between uncommented class properties -->
+  <rule ref="SlevomatCodingStandard.Classes.PropertySpacing">
+    <properties>
+      <property name="maxLinesCountBeforeWithoutComment" value="0" />
+    </properties>
+  </rule>
+
+  <!-- Require consistent class structure order -->
+  <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+    <properties>
+      <property name="groups" type="array">
+        <element value="uses" />
+        <element value="enum cases" />
+        <element value="public constants, constants" />
+        <element value="public static properties, protected static properties, private static properties" />
+        <element value="public properties, protected properties, private properties" />
+        <element value="constructor" />
+        <element value="all public methods, methods, magic methods" />
+      </property>
+    </properties>
+  </rule>
+</ruleset>

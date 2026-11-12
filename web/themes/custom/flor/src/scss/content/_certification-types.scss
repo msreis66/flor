@@ -1,0 +1,12 @@
+.certification-types {
+  &--list {
+    .short-code {
+      --short-code-size: #{rem(30px)};
+
+      width: var(--short-code-size);
+      height: var(--short-code-size);
+      border-radius: var(--short-code-size);
+      line-height: 1;
+    }
+  }
+}

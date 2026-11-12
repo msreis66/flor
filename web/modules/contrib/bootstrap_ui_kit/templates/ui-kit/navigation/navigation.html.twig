@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Implements the Navigation tab content for the UI Kit.
+ *
+ * Displays usage of navigation within the theme.
+ */
+#}
+{% extends '@bootstrap_ui_kit/section.html.twig' %}
+
+{% block section_intro %}
+{% endblock %}
+
+{% block section_content %}
+  <div class="row gy-5">
+
+    {% block breadcrumb %}
+      {% trans %}
+      <div>
+        <strong class="d-block mb-3">Breadcrumb</strong>
+        <p class="mb-5">Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.</p>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+          </ol>
+        </nav>
+
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Library</li>
+          </ol>
+        </nav>
+
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+          </ol>
+        </nav>
+      </div>
+      <hr class="d-block border-top border-dark"/>
+      {% endtrans %}
+    {% endblock %}
+
+    {% block pagination %}
+      {% trans %}
+      <div>
+        <strong class="d-block mb-3">Pagination</strong>
+        <p class="mb-5">Documentation and examples for showing pagination to indicate a series of related content exists across multiple pages.</p>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+      {% endtrans %}
+    {% endblock %}
+
+  </div>
+{% endblock %}

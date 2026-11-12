@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "globalDependencies": [
+    ".env*",
+    "tsconfig.json",
+    "vite.config.js",
+    "webpack.config.js"
+  ],
+  "globalPassThroughEnv": ["NPM_*"],
+  "tasks": {
+    "build": {
+      "outputs": ["public/**"]
+    }
+  }
+}

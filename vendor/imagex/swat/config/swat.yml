@@ -1,0 +1,43 @@
+# Default config for SWAT.
+project:
+  prefix: 'SWAT'
+  theme:
+    status: false
+
+# Paths.
+docroot_name: docroot
+docroot: ${repo.root}/${docroot_name}
+
+# SWAT Hooks.
+command-hooks:
+  frontend-install:
+    dir: '${repo.root}'
+    command: 'npm install'
+  frontend-build:
+    dir: '${repo.root}'
+    command: 'npm run build:production'
+  post-artifact-build:
+    dir: '${deploy.dir}'
+    command: null
+
+# Deploy.
+deploy:
+  build-dependencies: true
+  dir: '${tmp.dir}/swat-deploy'
+  docroot: '${deploy.dir}/${docroot_name}'
+  exclude_file: '${swat.root}/defaults/deploy/deploy-exclude.txt'
+  exclude_additions_file: '${repo.root}/swat/deploy-exclude-additions.txt'
+  gitignore_file: '${swat.root}/defaults/deploy/.gitignore'
+  gitignore_additions_file: '${repo.root}/swat/gitignore-additions.txt'
+
+# Git
+git:
+  default_branch: master
+  remotes: {}
+  # user:
+    # name: 'ImageX Media'
+    # email: no-reply@imagexmedia.com
+
+# SWAT specific.
+swat:
+  host: acquia

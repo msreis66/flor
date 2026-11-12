@@ -1,0 +1,17 @@
+# DRUPAL.
+#cms_antispam:
+  #description: Sets up anti-spam and anti-abuse functionality.
+  #label: CMS Anti-Spam
+  #package: drupal_cms_anti_spam
+  #provider: drupal
+# IMAGEX.
+layout:
+  description: Bootstrap Layout Builder, IXM blocks and standard layout setup.
+  label: Layout
+  package: recipe-layout
+  provider: imagex
+search:
+  description: Search with Facets and Search API.
+  label: Search
+  package: recipe-search
+  provider: imagex

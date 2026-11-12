@@ -1,0 +1,26 @@
+# Put overrides to your pantheon.upstream.yml file here.
+# For more information, see: https://pantheon.io/docs/pantheon-yml/
+api_version: 1
+web_docroot: true
+
+# Disable the build on pantheon. SWAT in the pipelines handles it.
+build_step: false
+
+protected_web_paths:
+  - /themes/README.txt
+  - /core/CHANGELOG.txt
+  - /modules/README.txt
+  - /profiles/README.txt
+  - /sites/README.txt
+
+workflows:
+  sync_code:
+    after:
+      - type: webphp
+        description: Runs Drush deploy tasks
+        script: private/scripts/post-code-update.php
+  deploy:
+    after:
+      - type: webphp
+        description: Runs Drush deploy tasks
+        script: private/scripts/post-code-update.php

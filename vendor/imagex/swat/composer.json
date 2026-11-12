@@ -1,0 +1,50 @@
+{
+    "name": "imagex/swat",
+    "description": "A Robo CLI tool for ImageX Projects in Drupal 8+",
+    "type" : "phpcodesniffer-standard",
+    "authors": [
+        {
+            "name": "Bryan Sharpe",
+            "email": "bryansharpe@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0",
+        "ext-posix": "*",
+        "acquia/coding-standards": "^3.0",
+        "acquia/drupal-recommended-settings": "^1.0",
+        "consolidation/config": "^2 || ^3",
+        "consolidation/robo": "^4 || ^5",
+        "cweagans/composer-patches": "^1.7 || ^2",
+        "drush/drush": "^12.5 || ^13",
+        "php-parallel-lint/php-parallel-lint": "^1.4",
+        "phpro/grumphp": "^2.5"
+    },
+    "bin": [
+        "bin/swat"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Imagex\\Swat\\": "src"
+        }
+    },
+    "scripts": {
+        "sniff": "./vendor/bin/phpcs -s --standard=Drupal ./src/"
+    },
+    "extra": {
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "acquia/drupal-recommended-settings": true,
+            "cweagans/composer-patches": true,
+            "phpro/grumphp": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

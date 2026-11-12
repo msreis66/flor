@@ -1,0 +1,15 @@
+@import "@sjdc/global/src/scss/abstracts/scaffold";
+
+.view--related-persons {
+  &.view-display--featured-faculty {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    row-gap: 1.5rem;
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(auto-fit, rem(305px));
+      column-gap: 1.5rem;
+    }
+  }
+}

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../vendor/squizlabs/php_codesniffer/phpcs.xsd" name="SwatDrupal">
+  <description>ImageX SWAT Drupal coding standards.</description>
+
+  <file>.</file>
+
+  <!-- Exclude local development stack files -->
+  <exclude-pattern>*\.(ddev|docksal|lando)*</exclude-pattern>
+  <!-- Exclude top-level non-project files -->
+  <exclude-pattern>(node_modules|vendor)/*</exclude-pattern>
+  <!-- Exclude Drupal bootstrap files -->
+  <exclude-pattern>*/(autoload|index|update)\.php</exclude-pattern>
+  <!-- Exclude all other non-project files -->
+  <exclude-pattern>*/(node_modules|libraries|core|contrib|public)/*</exclude-pattern>
+  <!-- Exclude default and local Drupal sites settings -->
+  <exclude-pattern>*/sites/**/*\.?(local|default)\.*\.php</exclude-pattern>
+  <!-- Exclude Drupal public filesystem -->
+  <exclude-pattern>*/sites/**/files/*</exclude-pattern>
+  <!-- Exclude Drupal private filesystem -->
+  <exclude-pattern>*/files-private/**/*</exclude-pattern>
+
+  <arg name="extensions" value="engine,inc,install,module,php,profile,test,theme" />
+  <arg name="colors" />
+  <arg name="severity" value="5" />
+
+  <!-- Base rules -->
+  <rule ref="AcquiaDrupalStrict" />
+
+  <!--
+   #
+   # Drupal Standards
+   #
+  -->
+
+  <!-- Allow missing file doc comment -->
+  <rule ref="Drupal.Commenting.FileComment.Missing">
+    <exclude name="Drupal.Commenting.FileComment.Missing" />
+  </rule>
+
+  <!-- Allow missing class property comment -->
+  <rule ref="Drupal.Commenting.VariableComment.Missing">
+    <exclude name="Drupal.Commenting.VariableComment.Missing" />
+  </rule>
+
+  <!-- Allow missing class comment -->
+  <rule ref="Drupal.Commenting.ClassComment.Missing">
+    <exclude name="Drupal.Commenting.ClassComment.Missing" />
+  </rule>
+
+  <!-- Allow missing short description comment -->
+  <rule ref="Drupal.Commenting.DocComment.MissingShort">
+    <exclude name="Drupal.Commenting.DocComment.MissingShort" />
+  </rule>
+
+  <!-- Allow missing function comment in *.php files -->
+  <rule ref="Drupal.Commenting.FunctionComment.Missing">
+    <exclude-pattern>*/src/.*\.php$</exclude-pattern>
+  </rule>
+
+  <!-- Allow unused variables in Drupal sites settings -->
+  <rule ref="DrupalPractice.CodeAnalysis.VariableAnalysis.UnusedVariable">
+    <exclude-pattern>*/sites/**/*\.php</exclude-pattern>
+  </rule>
+
+  <!-- Allow global functions -->
+  <rule ref="Squiz.Functions.GlobalFunction.Found">
+    <exclude name="Squiz.Functions.GlobalFunction.Found" />
+  </rule>
+
+  <!--
+   #
+   # Slevomat Standards
+   #
+  -->
+
+  <!-- Allow mixed type hints -->
+  <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint">
+    <exclude name="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint" />
+  </rule>
+
+  <!-- Allow missing parameter type hint outside of classes -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint">
+    <exclude-pattern>*/*\.(module|install)$</exclude-pattern>
+    <exclude-pattern>*/themes/**/*</exclude-pattern>
+  </rule>
+
+  <!-- Allow missing return type hint outside of classes -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
+    <exclude-pattern>*/*\.(module|install)$</exclude-pattern>
+    <exclude-pattern>*/themes/**/*</exclude-pattern>
+  </rule>
+
+  <!-- Allow missing traversable property type hint -->
+  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification">
+    <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
+  </rule>
+
+  <!-- Allow missing traversable return type hint -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification">
+    <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+  </rule>
+
+  <!-- Allow missing traversable parameter type hint -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
+    <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
+  </rule>
+
+  <!--
+   #
+   # Redundant Standards
+   #
+  -->
+
+  <!-- Provided by Drupal.Arrays.DisallowLongArraySyntax.Found -->
+  <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
+    <exclude name="Generic.Arrays.DisallowLongArraySyntax.Found" />
+  </rule>
+
+  <!-- Provided by Drupal.Functions.MultiLineFunctionDeclaration.EmptyLine -->
+  <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine">
+    <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine" />
+  </rule>
+
+  <!-- Provided by DrupalPractice.Commenting.CommentEmptyLine.SpacingAfter -->
+  <rule ref="Drupal.Commenting.InlineComment.SpacingAfter">
+    <exclude name="Drupal.Commenting.InlineComment.SpacingAfter" />
+  </rule>
+</ruleset>

@@ -1,0 +1,372 @@
+@import "@sjdc/global/components/button/src/scss/button";
+@import "@sjdc/global/components/link/src/scss/link";
+
+header {
+  &.position-sticky {
+    z-index: 500;
+    top: 0;
+
+    @include media-breakpoint-up(lg) {
+      top: var(--drupal-displace-offset-top, 0);
+    }
+  }
+
+  &:has(nav.header-collapse.show) {
+    @include media-breakpoint-down(lg) {
+      overflow: scroll;
+      height: 100vh;
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .main-nav {
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-columns: 1fr auto;
+    padding-bottom: 0;
+
+    @include media-breakpoint-down(lg) {
+      &:has(nav.collapse.show, nav.collapsing) {
+        height: 100vh;
+      }
+    }
+  }
+
+  .navbar-brand {
+    grid-row: 1;
+    margin-left: rem(4px);
+
+    svg {
+      @media (width <= 1048px) {
+        width: rem(145px);
+        height: rem(50px);
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      @include container-spacing("margin-left");
+
+      grid-row: 1 / span 2;
+      grid-column: 1;
+      margin-bottom: rem(17px);
+    }
+  }
+
+  .navbar-mobile-buttons {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .navbar-toggler {
+    display: flex;
+    align-items: center;
+    border: 0;
+    background-color: var(--#{$prefix}primary);
+
+    &-icon {
+      width: rem(18px);
+      height: rem(12px);
+      background-size: initial;
+    }
+
+    &[aria-expanded="true"] {
+      .navbar-toggler-icon {
+        background-image: escape-svg($navbar-light-toggler-icon-bg-hover);
+      }
+    }
+  }
+
+  .navbar-bar {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+
+    @include media-breakpoint-up(lg) {
+      grid-row: 3;
+    }
+  }
+
+  .search-block-form {
+    grid-column: 1 / span 2;
+
+    @include media-breakpoint-up(lg) {
+      grid-row: 4;
+    }
+  }
+
+  #block-sjdc-main-menu {
+    grid-row: 4;
+    grid-column: 1 / span 2;
+    align-self: start;
+    margin-right: rem(4px);
+
+    @include media-breakpoint-up(lg) {
+      @include container-spacing("margin-right");
+
+      position: initial !important;
+      grid-row: 2;
+      grid-column: 2;
+    }
+  }
+
+  #block-sjdc-utilitymenu {
+    grid-row: 5;
+    grid-column: 1 / span 2;
+
+    @include media-breakpoint-up(lg) {
+      @include container-spacing("margin-right");
+
+      grid-row: 1;
+      grid-column: 2;
+      justify-self: end;
+    }
+  }
+
+  .search-form {
+    padding: rem(24px 12px);
+
+    // Bootstrap reboot is not applied to the search form.
+    // https://github.com/twbs/bootstrap/issues/11586
+    input[type="search"] {
+      background: $white;
+    }
+
+    &__fieldset {
+      display: flex;
+      justify-content: space-between;
+      padding: rem(8px);
+      border: rem(1px) solid var(--#{$prefix}gray-100);
+      border-radius: rem(100px);
+      background-color: $white;
+    }
+
+    .form-type-search {
+      flex: 1 1 auto;
+      margin-right: rem(16px);
+      margin-left: rem(16px);
+    }
+
+    .form-search {
+      width: 100%;
+      height: 100%;
+      border: 0;
+
+      &::placeholder {
+        color: $gray-700;
+      }
+    }
+
+    .form-submit {
+      --button-default-size: #{rem(40px)};
+
+      overflow: hidden;
+      width: var(--button-default-size);
+      height: var(--button-default-size);
+      text-indent: var(--button-default-size);
+      border: 0;
+      border-radius: var(--button-default-size);
+      background: var(--#{$prefix}primary) escape-svg($gray-search-icon) 50% 50% no-repeat;
+    }
+  }
+
+  .nav-item {
+    font-size: $font-size-lg;
+
+    .nav-link-parent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: $h6-font-size;
+
+      &.dropdown-toggle {
+        position: relative;
+
+        &::after {
+          @extend %material-symbols-outlined;
+
+          margin-right: rem(7px);
+          content: "\e69b";
+          transition: $transition-base;
+          vertical-align: initial;
+          border: 0;
+          font-weight: $font-weight-normal;
+
+          @include media-breakpoint-up(lg) {
+            font-size: $font-size-base;
+          }
+        }
+
+        &.show {
+          &::before {
+            @include media-breakpoint-up(lg) {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: rem(3px);
+              content: "";
+              border-radius: rem(3px);
+              background-color: $gray-700;
+            }
+          }
+
+          &::after {
+            transform: scaleY(-1);
+          }
+        }
+
+        @include media-breakpoint-up(lg) {
+          padding-bottom: rem(20px);
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: $font-size-base;
+      }
+    }
+
+    .dropdown-menu {
+      margin: 0;
+      padding: rem(0 16px);
+      border: 0;
+    }
+  }
+
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+    @include media-breakpoint-up(lg) {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      padding: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  .nav-overview {
+    @include container-spacing("padding-left");
+
+    position: relative;
+    min-height: rem(300px);
+    padding-right: rem(64px);
+
+    &::before {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: "";
+      opacity: 0.4;
+      background: url("/themes/custom/sjdc/public/assets/gradient-bg.png") 50% 50% / cover no-repeat;
+    }
+
+    &__content {
+      position: relative;
+      z-index: 1;
+      width: rem(295px);
+    }
+
+    @media (width <= 1048px) {
+      padding-right: 0;
+    }
+  }
+
+  .nav-links {
+    .nav-link {
+      @include media-breakpoint-up(lg) {
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    @media (width <= 1048px) {
+      gap: 0;
+    }
+
+    @include media-breakpoint-up(lg) {
+      gap: rem(65px);
+      padding: rem(65px 0 65px 23px);
+    }
+  }
+
+  .nav-heading {
+    margin-top: rem(13px);
+    margin-bottom: rem(14px);
+    padding: rem(15px);
+    background-color: rgba($gray-100, 0.6);
+
+    .menu-item {
+      font-weight: $font-weight-bold;
+    }
+
+    .nav-link {
+      @include media-breakpoint-up(lg) {
+        --bs-navbar-nav-link-padding-x: 0;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      @include container-spacing("margin-right");
+
+      width: rem(268px);
+      margin-top: rem(62px);
+    }
+  }
+
+  .search-toggle {
+    &::after {
+      @extend %material-symbols-outlined;
+
+      content: "\e8b6";
+      vertical-align: top;
+      font-size: rem(24px);
+    }
+
+    &[aria-expanded="true"]::after {
+      content: "\e5cd";
+    }
+  }
+
+  .utility-menu {
+    .dropdown-menu {
+      --#{$prefix}dropdown-border-width: 0;
+      --#{$prefix}dropdown-spacer: #{rem(12px)};
+      --#{$prefix}dropdown-border-radius: var(--#{$prefix}border-radius-xl);
+
+      width: 100%;
+      box-shadow: rem(0px 1px 4px 0px) rgba($gray-700, 0.25);
+    }
+
+    .menu-item {
+      a {
+        &.dropdown-toggle::after {
+          @extend %material-symbols-outlined;
+
+          margin-right: 0;
+          content: "\e69b";
+          transition: $transition-base;
+          vertical-align: initial;
+          border: 0;
+          font-weight: $font-weight-normal;
+        }
+
+        &.show::after {
+          transform: scaleY(-1);
+        }
+
+        @include media-breakpoint-down(lg) {
+          width: 100%;
+        }
+      }
+
+      @include media-breakpoint-down(lg) {
+        flex-basis: 0;
+        flex-grow: 1;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      padding-right: $grid-gutter-width * 0.5;
+      padding-left: $grid-gutter-width * 0.5;
+    }
+  }
+}

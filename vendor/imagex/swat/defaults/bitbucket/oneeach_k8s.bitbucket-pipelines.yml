@@ -1,0 +1,156 @@
+definitions:
+  scripts:
+    - &build-script |
+      yum install -y jq
+
+      export AWS_ROLE_ARN=arn:aws:iam::444854564606:role/${CUSTOMER_NAME}-ecr-pusher
+      export AWS_WEB_IDENTITY_TOKEN_FILE=$(pwd)/web-identity-token
+      export ECR_REGISTRY=444854564606.dkr.ecr.us-west-2.amazonaws.com
+      export ECR_REGION=us-west-2
+      echo $BITBUCKET_STEP_OIDC_TOKEN > ${AWS_WEB_IDENTITY_TOKEN_FILE}
+
+      ASSUMED_ROLE_JSON=$(aws sts assume-role-with-web-identity \
+        --role-arn ${AWS_ROLE_ARN} \
+        --role-session-name "BitbucketOIDCBuild-${BITBUCKET_BUILD_NUMBER}" \
+        --web-identity-token file://${AWS_WEB_IDENTITY_TOKEN_FILE} \
+        --duration-seconds 3600 \
+        --query 'Credentials' \
+        --output json)
+
+      export AWS_ACCESS_KEY_ID=$(echo ${ASSUMED_ROLE_JSON} | jq -r '.AccessKeyId')
+      export AWS_SECRET_ACCESS_KEY=$(echo ${ASSUMED_ROLE_JSON} | jq -r '.SecretAccessKey')
+      export AWS_SESSION_TOKEN=$(echo ${ASSUMED_ROLE_JSON} | jq -r '.SessionToken')
+
+      aws ecr get-login-password --region ${ECR_REGION} \
+        | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+
+      TAG="${IMAGE_TAG:-$(echo $BITBUCKET_COMMIT | cut -c1-7)}"
+      docker build --build-arg PIPELINE_ENV=${PIPELINE_ENV} -t "${ECR_REGISTRY}/${CUSTOMER_NAME}:${TAG}" .
+      docker push "${ECR_REGISTRY}/${CUSTOMER_NAME}:${TAG}"
+
+    - &deploy-script |
+      apk update && apk add --no-cache jq
+
+      export TAG="${IMAGE_TAG:-$(echo $BITBUCKET_COMMIT | cut -c1-7)}"
+
+      tbot start kubernetes \
+        --destination=./tbot-user \
+        --kubernetes-cluster=${K8S_CLUSTER} \
+        --join-method=bitbucket \
+        --proxy-server=teleport.oneeach.net:443 \
+        --token=${CUSTOMER_NAME} \
+        --oneshot
+
+      export AWS_ROLE_ARN=arn:aws:iam::444854564606:role/${CUSTOMER_NAME}-ecr-pusher
+      export AWS_WEB_IDENTITY_TOKEN_FILE=$(pwd)/web-identity-token
+      export ECR_REGISTRY=444854564606.dkr.ecr.us-west-2.amazonaws.com
+      export ECR_REGION=us-west-2
+      echo $BITBUCKET_STEP_OIDC_TOKEN > ${AWS_WEB_IDENTITY_TOKEN_FILE}
+
+      ASSUMED_ROLE_JSON=$(aws sts assume-role-with-web-identity \
+        --role-arn ${AWS_ROLE_ARN} \
+        --role-session-name "BitbucketOIDCBuild-${BITBUCKET_BUILD_NUMBER}" \
+        --web-identity-token file://${AWS_WEB_IDENTITY_TOKEN_FILE} \
+        --duration-seconds 3600 \
+        --query 'Credentials' \
+        --output json)
+
+      export AWS_ACCESS_KEY_ID=$(echo ${ASSUMED_ROLE_JSON} | jq -r '.AccessKeyId')
+      export AWS_SECRET_ACCESS_KEY=$(echo ${ASSUMED_ROLE_JSON} | jq -r '.SecretAccessKey')
+      export AWS_SESSION_TOKEN=$(echo ${ASSUMED_ROLE_JSON} | jq -r '.SessionToken')
+
+      aws ecr get-login-password --region us-west-2 \
+        | helm registry login \
+          --username AWS \
+          --password-stdin \
+          444854564606.dkr.ecr.us-west-2.amazonaws.com
+
+      helm upgrade --install ${CUSTOMER_NAME}-${DEPLOY_ENV} \
+        --create-namespace \
+        --kubeconfig=./tbot-user/kubeconfig.yaml \
+        -f values-${DEPLOY_ENV}.yaml \
+        --set image.tag=${TAG} \
+        --set customerName=${CUSTOMER_NAME} \
+        --set env=${DEPLOY_ENV} \
+        -n ${CUSTOMER_NAME}-${DEPLOY_ENV} \
+        --wait --timeout 10m \
+        --version 0.0.1 \
+        oci://444854564606.dkr.ecr.us-west-2.amazonaws.com/oneeach-drupal-site-external
+
+      # Run swat deploy inside the cron container to complete deployment tasks.
+      kubectl exec -n ${CUSTOMER_NAME}-${DEPLOY_ENV} deploy/${CUSTOMER_NAME}-${DEPLOY_ENV}-cron -c php-cron --kubeconfig=./tbot-user/kubeconfig.yaml -- swat deploy
+
+  services:
+    docker:
+      memory: 3072
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: "Image build"
+          image: public.ecr.aws/aws-cli/aws-cli:2.27.22
+          oidc: true
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - export PIPELINE_ENV=dev
+            - *build-script
+
+      - step:
+          name: "Deploy to DEV"
+          image: public.ecr.aws/e2a8p8m7/oneeach-entimx-base-image-teleport:latest
+          oidc: true
+          deployment: test
+          script:
+            - export K8S_CLUSTER=stg-entimx-shared-eks
+            - export DEPLOY_ENV=dev
+            - *deploy-script
+
+    staging:
+      - step:
+          name: "Image build"
+          image: public.ecr.aws/aws-cli/aws-cli:2.27.22
+          oidc: true
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - export PIPELINE_ENV=stg
+            - *build-script
+
+      - step:
+          name: "Deploy to STG"
+          image: public.ecr.aws/e2a8p8m7/oneeach-entimx-base-image-teleport:latest
+          oidc: true
+          deployment: staging
+          script:
+            - export K8S_CLUSTER=stg-entimx-shared-eks
+            - export DEPLOY_ENV=stg
+            - *deploy-script
+
+    production:
+      - step:
+          name: "Image build"
+          image: public.ecr.aws/aws-cli/aws-cli:2.27.22
+          oidc: true
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - export PIPELINE_ENV=prd
+            - *build-script
+
+      - step:
+          name: "Deploy to PRD"
+          image: public.ecr.aws/e2a8p8m7/oneeach-entimx-base-image-teleport:latest
+          oidc: true
+          deployment: production
+          script:
+            - export K8S_CLUSTER=prd-entimx-shared-eks
+            - export DEPLOY_ENV=prd
+            - *deploy-script

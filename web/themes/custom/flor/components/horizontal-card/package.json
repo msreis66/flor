@@ -1,0 +1,7 @@
+{
+  "name": "@theme/component.horizontal-card",
+  "type": "module",
+  "scripts": {
+    "build": "swat build"
+  }
+}

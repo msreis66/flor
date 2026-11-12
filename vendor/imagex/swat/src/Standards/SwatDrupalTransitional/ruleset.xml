@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../vendor/squizlabs/php_codesniffer/phpcs.xsd" name="SwatDrupalTransitional">
+  <description>ImageX SWAT Drupal Transitional coding standards.</description>
+
+  <!-- Exclude Drupal sites settings -->
+  <exclude-pattern>*/sites/**/*\.php</exclude-pattern>
+
+  <!-- Base rules -->
+  <rule ref="SwatDrupal" />
+
+  <!--
+   #
+   # Drupal Standards
+   #
+  -->
+
+  <!-- Allow unused variables -->
+  <rule ref="DrupalPractice.CodeAnalysis.VariableAnalysis.UnusedVariable">
+    <exclude name="DrupalPractice.CodeAnalysis.VariableAnalysis.UnusedVariable" />
+  </rule>
+
+  <!-- Allow missing parameter type hint -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint">
+    <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint" />
+  </rule>
+</ruleset>

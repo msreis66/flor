@@ -1,0 +1,13 @@
+.person-list {
+  background-color: rgba($gray-100, 0.5);
+
+  &-no-photo {
+    width: rem(50px);
+    height: rem(50px);
+  }
+
+  &--icon--phone,
+  &--icon--mail {
+    max-width: rem(24px);
+  }
+}

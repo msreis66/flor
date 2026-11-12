@@ -1,0 +1,13 @@
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon
+
+Thumbs.db
+._*
+vendor
+!vendor/twbs/bootstrap-icons/icons
+!vendor/twbs/bootstrap-icons/bootstrap-icons.svg
+composer.lock
+.idea

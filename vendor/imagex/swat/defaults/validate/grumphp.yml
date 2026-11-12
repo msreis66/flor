@@ -1,0 +1,40 @@
+grumphp:
+  ascii:
+    succeeded: ~
+    failed: ~
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: "ddev exec env FORCE_COLOR=1"
+  tasks:
+    eslint:
+      bin: node_modules/.bin/swat-eslint
+      triggered_by: [js, ts, jsx, tsx, cjs, cts, mjs, mts, vue, html, xml, svg, json, jsonc, yml, yaml, toml]
+      whitelist_patterns:
+        - /\/(modules|themes)\/custom\/.*/
+    stylelint:
+      bin: node_modules/.bin/swat-stylelint
+      triggered_by: [css, scss]
+      whitelist_patterns:
+        - /\/(modules|themes)\/custom\/.*/
+    phpcs:
+      standard: phpcs.xml
+      triggered_by: [engine, inc, install, module, php, profile, test, theme]
+    git_commit_message:
+      max_subject_width: 0
+      enforce_no_subject_trailing_period: false
+      matchers:
+        # Must contain JIRA issue number and short description.
+        - '/^${prefix}-\d+\:.{15,}/'
+    git_branch_name:
+      whitelist:
+        - 'master'
+        - 'main'
+        - '/^feature\/.*/'
+        - '/^bugfix\/.*/'
+        - '/^hotfix\/.*/'
+        - '/^release\/.*/'
+        - '/^${prefix}-\d+/'
+        - 'stage'
+        - 'staging'
+        - 'production'
+        # Uncomment the line below to allow Pantheon multidev branch names, otherwise remove it.
+        # - '/^md-.{1,8}$/'

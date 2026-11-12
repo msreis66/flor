@@ -1,0 +1,51 @@
+bootstrap_ui_kit.settings:
+  type: config_object
+  label: 'Bootstrap UI Kit settings'
+  mapping:
+    enable_dev_kit:
+      type: boolean
+      label: 'Enable Dev Kit'
+    icons_source_folder:
+      type: string
+      label: 'Icons source folder'
+    icons_sprite_file:
+      type: string
+      label: 'Icons sprite file'
+    glossary:
+      type: sequence
+      label: 'Glossary'
+      description: 'Collection of glossary groups keyed by machine names.'
+      sequence:
+        type: bootstrap_ui_kit.glossary_group
+        label: 'Glossary group'
+
+bootstrap_ui_kit.glossary_group:
+  type: mapping
+  label: 'Glossary group'
+  mapping:
+    title:
+      type: string
+      label: 'Group title'
+    weight:
+      type: integer
+      label: 'Group weight'
+    sections:
+      type: sequence
+      label: 'Sections'
+      sequence:
+        type: bootstrap_ui_kit.glossary_section
+        label: 'Glossary section'
+
+bootstrap_ui_kit.glossary_section:
+  type: mapping
+  label: 'Glossary section'
+  mapping:
+    title:
+      type: string
+      label: 'Title'
+    modal:
+      type: boolean
+      label: 'Enable modal'
+    weight:
+      type: integer
+      label: 'Weight'

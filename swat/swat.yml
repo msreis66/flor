@@ -1,0 +1,7 @@
+project:
+  theme:
+    human_name: Flor
+    name: flor
+    description: 'Custom theme for Flor.'
+    dir: '${docroot}/themes/custom/flor'
+    status: true

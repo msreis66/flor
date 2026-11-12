@@ -1,0 +1,183 @@
+<?php
+
+/**
+ * @file
+ * Module implementation file.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ *
+ * Provides contextual help information for the Bootstrap UI Kit module.
+ * This function is invoked when Drupal's help system requests help
+ * for the bootstrap_ui_kit module.
+ *
+ * @param string $route_name
+ *   The machine name of the route being accessed.
+ * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+ *   The current route match object containing parameters from the route.
+ *
+ * @return string
+ *   The HTML-formatted help content for the specified route.
+ */
+function bootstrap_ui_kit_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the bootstrap_ui_kit module.
+    case 'help.page.bootstrap_ui_kit':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module provides a built-in User Interface Kit for your bootstrap enabled theme.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * Defines theme implementations provided by the Bootstrap UI Kit module.
+ * This function registers a theme hook for the 'page__ui_kit' template.
+ *
+ * @return array
+ *   An associative array defining the template file or render
+ *   element to be used for the 'page__ui_kit' theme hook.
+ */
+function bootstrap_ui_kit_theme($existing, $type, $theme, $path) {
+  return [
+    'page__ui_kit' => [
+      'template' => 'page--ui-kit',
+      'render element' => 'html',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for the 'page__ui_kit' template.
+ *
+ * This preprocess function is invoked before rendering the 'page__ui_kit' template
+ * and is responsible for preparing variables that will be available within the template.
+ * It retrieves configuration settings from the 'bootstrap_ui_kit.settings' configuration,
+ * determines user access permissions, fetches information about the active theme,
+ * and dynamically loads the iconography icon set.
+ *
+ * @param array &$variables
+ *   An associative array containing variables for the 'page__ui_kit' template.
+ */
+function bootstrap_ui_kit_preprocess_page__ui_kit(&$variables) {
+  $config = \Drupal::config('bootstrap_ui_kit.settings');
+  $variables['logo'] = \Drupal::theme()->getActiveTheme()->getLogo();
+
+  // Load glossary from config.
+  $glossary = $config->get('glossary') ?? [];
+
+  // Set access variable for twig.
+  $variables['access'] = FALSE;
+  if (\Drupal::currentUser()->hasPermission('access bootstrap ui kit')) {
+    $variables['access'] = TRUE;
+
+    // Set dev mode, if user has the permission.
+    if (\Drupal::currentUser()->hasPermission('access bootstrap ui kit dev mode')) {
+      $variables['dev_mode'] = $config->get('enable_dev_kit') ?? FALSE;
+    }
+  }
+
+  // Name of the active theme.
+  $active_theme = \Drupal::service('theme.manager')->getActiveTheme();
+  $variables['active_theme'] = $active_theme->getName() ?? 'default_theme';
+
+  // Base themes.
+  $variables['base_themes'] = [];
+  if($base_themes = $active_theme->getBaseThemeExtensions()) {
+    foreach ($base_themes as $base_theme) {
+      $variables['base_themes'][] = $base_theme->getName() ?? 'default_base_theme';
+    }
+  }
+
+  // Dynamically load the iconography iconset.
+  $variables['iconography_set'] = [];
+  if ($icons_source_path = $config->get('icons_source_folder')) {
+    $directory = DRUPAL_ROOT . $icons_source_path;
+    if (is_dir($directory)) {
+      $iterator = new DirectoryIterator($directory);
+
+      foreach ($iterator as $fileinfo) {
+        if ($fileinfo->isFile() && $fileinfo->getExtension() === 'svg') {
+          $variables['iconography_set'][] = str_replace('.svg', '', $fileinfo->getFilename());
+        }
+      }
+    }
+  }
+
+  // Ensure glossary sections have proper structure and sort by weight
+  foreach ($glossary as $group_id => &$group_data) {
+    // Handle new structure where sections are nested under 'sections' key
+    if (is_array($group_data) && isset($group_data['sections'])) {
+      $sections = &$group_data['sections'];
+    } else {
+      // Handle legacy structure for backward compatibility
+      $sections = &$group_data;
+    }
+
+    if (is_array($sections)) {
+      foreach ($sections as $section_id => &$section_data) {
+        if (is_array($section_data)) {
+          $section_data['title'] = $section_data['title'] ?? ucfirst(str_replace('_', ' ', $section_id));
+          $section_data['modal'] = $section_data['modal'] ?? false;
+          $section_data['weight'] = $section_data['weight'] ?? 0;
+        }
+      }
+
+      // Sort sections by weight within each group
+      uasort($sections, function ($a, $b) {
+        $weight_a = is_array($a) && isset($a['weight']) ? (int)$a['weight'] : 0;
+        $weight_b = is_array($b) && isset($b['weight']) ? (int)$b['weight'] : 0;
+        return $weight_a <=> $weight_b;
+      });
+    }
+  }
+
+  // Sort groups by weight
+  uasort($glossary, function ($a, $b) {
+    $weight_a = is_array($a) && isset($a['weight']) ? (int)$a['weight'] : 0;
+    $weight_b = is_array($b) && isset($b['weight']) ? (int)$b['weight'] : 0;
+    return $weight_a <=> $weight_b;
+  });
+
+  // Pass the complete glossary structure to the template (preserving group metadata)
+  $variables['glossary'] = $glossary;
+}
+
+/**
+ * Prepares variables for the 'page_title' template.
+ *
+ * This preprocess function is invoked before rendering the 'page_title' template
+ * and is responsible for preparing variables that will be available within the template.
+ * It checks the current route name and conditionally alters the page title for the
+ * 'bootstrap_ui_kit.ui_kit' route to be an empty string.
+ *
+ * @param array &$variables
+ *   An associative array containing variables for the 'page_title' template.
+ */
+function bootstrap_ui_kit_preprocess_page_title(&$variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'bootstrap_ui_kit.ui_kit') {
+    $variables['title'] = t('');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function bootstrap_ui_kit_preprocess_html(array &$variables): void {
+  $config = \Drupal::config('bootstrap_ui_kit.settings');
+  // Add the sprite if the file has been added via config.
+  if($icons_sprite_file = $config->get('icons_sprite_file')) {
+    $icons_sprite_file = ltrim($icons_sprite_file, '/');
+    $icons = file_get_contents($icons_sprite_file);
+    $variables['page_bottom']['bootstrap_ui_kit_icons'] = [
+      '#type' => 'inline_template',
+      '#template' => '<span class="d-none bootstrap-ui-kit__icons-sprite">' . $icons . '</span>',
+    ];
+  }
+}

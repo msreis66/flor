@@ -1,0 +1,10 @@
+{
+  "name": "drupal/bootstrap_ui_kit",
+  "type": "drupal-module",
+  "keywords": ["Drupal", "Bootstrap", "Kitchen Sink", "UI Kit", "Accessibility"],
+  "license": "GPL-2.0+",
+  "description": "Adds a custom branded User interface kit inheriting styles from your theme.",
+  "require": {
+    "twbs/bootstrap-icons": "^1.10"
+  }
+}

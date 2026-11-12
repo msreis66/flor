@@ -1,0 +1,8 @@
+#layout-builder-modal {
+  .form-required {
+    &::after {
+      content: " *";
+      color: $danger;
+    }
+  }
+}

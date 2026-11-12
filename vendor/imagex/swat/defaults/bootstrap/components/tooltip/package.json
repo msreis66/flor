@@ -1,0 +1,7 @@
+{
+  "name": "@theme/tooltip",
+  "type": "module",
+  "scripts": {
+    "build": "swat build"
+  }
+}

@@ -1,0 +1,11 @@
+
+
+> build
+> swat build
+
+[36mvite v7.3.1 [32mbuilding client environment for dev...[36m[39m
+[2K[1Gtransforming (1) [2msrc/js/horizontal-card.ts[22m[2K[1Gtransforming (28) [2m../../../../../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js[22m[2K[1G[32m✓[39m 61 modules transformed.
+[2K[1Grendering chunks (1)...[2K[1Grendering chunks (2)...[2K[1G[2K[1Gcomputing gzip size (0)...[2K[1Gcomputing gzip size (1)...[2K[1Gcomputing gzip size (2)...[2K[1G[2mpublic/[22m[35mcss/horizontal-card.css  [39m[1m[2m  3.69 kB[22m[1m[22m[2m │ gzip:  0.87 kB[22m
+[2mpublic/[22m[36mjs/horizontal-card.js    [39m[1m[2m170.15 kB[22m[1m[22m[2m │ gzip: 35.76 kB[22m[2m │ map: 329.83 kB[22m
+[32m✓ built in 669ms[39m
+⠙[1G[0K⠙[1G[0K

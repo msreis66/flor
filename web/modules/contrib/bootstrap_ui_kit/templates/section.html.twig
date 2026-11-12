@@ -1,0 +1,170 @@
+{#
+/**
+ * @file
+ * Default implementation of the UI Kit tab content.
+ *
+ * Displays usage of icons within the theme.
+ *
+ * Available variables:
+ * - key: The top-level category this section belongs to.
+ * - section: The current section designated by the glossary array.
+ */
+#}
+{% block section %}
+
+  {# Show the modal by default in dev_mode, unless the glossary defines it otherwise. #}
+  {% set show_modal = section.modal is null and dev_mode ? true : false %}
+
+  {% block section_title %}
+    <h2 class="section__heading mb-4 d-flex align-items-center d-block gap-3 {{ subtitle ? 'text-secondary' }}">
+
+      {{ section.title|t }}
+
+      {# Copy link & dev_mode modal #}
+      <nav class="bootstrap-ui-kit__actions-nav nav gap-2 ms-auto justify-content-between flex-fill">
+        {% block button_copy_link %}
+          <button type="button" class="btn btn-light rounded-circle p-1 btn-copy__link">
+            <i class="d-flex align-items-center">
+              <svg role="img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+              </svg>
+            </i>
+          </button>
+        {% endblock %}
+
+        {% if show_modal %}
+          {% block button_dev_modal %}
+            <button type="button"
+                    class="btn btn-dark rounded-circle p-1 ml-auto btn-hide_modal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#{{ section.id ~ '__dev-modal' }}">
+              <i class="d-flex align-items-center" role="presentation">
+                <svg role="img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="icon icon-md p-1 bi bi-code-slash" viewBox="0 0 16 16">
+                  <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+                </svg>
+              </i>
+            </button>
+          {% endblock %}
+        {% endif %}
+      </nav>
+    </h2>
+  {% endblock %}
+
+  {% block section_intro %}
+    {{ 'Introductory content...'|t }}
+  {% endblock %}
+
+  <div class="section pt-5 border-top">
+    <div class="row">
+      <div class="col-12">
+        {% block section_content %}
+          {{ 'Your content goes here...'|t }}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+  {% if show_modal %}
+    {% block section_modal %}
+      <div id="{{ (section.id|default('section')) ~ '__dev-modal' }}"
+           class="modal modal-xl fade"
+           data-bs-backdrop="static"
+           aria-hidden="true"
+           aria-labelledby="{{ (section.id|default('section')) ~ '__dev-modal--label' }}"
+           tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 rounded-4 shadow-lg">
+
+              <div class="modal-header border-0 p-5 pb-3">
+                <div class="d-flex">
+                  <h4 class="modal-title" id="{{ (section.id|default('section')) ~ '__dev-modal--label' }}">{{ (section.title|default('Section'))|capitalize }}</h4>
+                  <small class="badge rounded-pill bg-danger my-auto ms-3">{{ 'Developer info'|t }}</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|t }}"></button>
+              </div>
+
+              <div class="modal-body px-5 pt-0">
+                {% block modal_body %}
+
+                  {# Default tab, override in your sections modal_body block. #}
+                  {% set tab_defaults = { 'twig': {} } %}
+                  {% set tabs = tabs ? tabs|merge(tab_defaults) : tab_defaults %}
+
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs mb-4 navbar-dark" role="tablist">
+
+                    {% for key, tab in tabs %}
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link link-primary{{ loop.first ? ' active' }}"
+                                id="tab-{{ key }}"
+                                data-bs-toggle="tab"
+                                data-bs-target="#{{ (section.id|default('section')) ~ '__dev-modal--' ~ key|lower }}"
+                                type="button"
+                                role="tab"
+                                aria-controls="{{ (section.id|default('section')) ~ '__dev-modal--twig' }}"
+                                aria-selected="true">
+                          {{ tab.title ? tab.title : key|upper|t }}
+                        </button>
+                      </li>
+                    {% endfor %}
+                  </ul>
+
+                  <!-- Tab panes -->
+                  <div class="tab-content">
+
+                    {% for key, tab in tabs %}
+                      {% set name = tab.title ? tab.title : key|upper|t %}
+
+                      {# Allow overriding the tabs documentation file name, otherwise use the key as the name and the extension #}
+                      {% set doc_file = tab.docFile ? tab.docFile : (key|lower ~ '.' ~ key|lower) %}
+
+                      <div class="tab-pane {{ loop.first ? ' active' }}" id="{{ (section.id|default('section')) ~ '__dev-modal--' ~ key|lower }}" role="tabpanel" aria-labelledby="tab-{{ key|lower }}">
+
+                        {% if tab.files is null %}
+                          <strong>{{ tab.title ? tab.title : key|upper|t }} {{ 'Usage:'|t }}</strong>
+                          <pre>
+                            <code class="language-{{ tab['hilightLang'] ? tab['hilightLang'] : key|lower }}">{% autoescape %}{% apply spaceless %}
+                              {#
+                              # Documentation files are loaded in the following order;
+                              # - custom path     (custom theme or module passed in the glossary array)
+                              # - active theme    (under the /ui-kit/ dir)
+                              # - base theme      (under the /ui-kit/ dir)
+                              # - defaults        (bootstrap_ui_kit module)
+                              # - boilerplate     (boilerplate fallback)
+                              #}
+                              {{ fileGetContents([
+                                ('@' ~ (section.path|default('bootstrap_ui_kit')) ~ '/ui-kit/' ~ (section.id|default('section')) ~ '/docs/' ~ doc_file),
+                                ('@' ~ (active_theme|default('default')) ~ '/ui-kit/' ~ (section.id|default('section')) ~ '/docs/' ~ doc_file),
+                                ('@' ~ (base_themes|first|default('default')) ~ '/ui-kit/' ~ (section.id|default('section')) ~ '/docs/' ~ doc_file),
+                                ('@bootstrap_ui_kit/ui-kit/' ~ (section.id|default('section')) ~ '/docs/' ~ doc_file),
+                                '@bootstrap_ui_kit/ui-kit/boilerplate/docs/docs.html'
+                                ]) }}
+                              {% endapply %}{% endautoescape %}</code>
+                          </pre>
+                        {% else %}
+                          <div class="row">
+                            {% for key, filePath in tab.files %}
+                              <div class="col col-lg">
+                                <strong>{{ key|t }}:</strong><br/>
+                                <small class="badge bg-info overflow-wrap-anywhere text-start"><em>{{ filePath }}</em></small>
+                                <pre>
+                                <code class="language-php">{{ fileGetContents([filePath]) }}</code>
+                              </pre>
+                              </div>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+
+                      </div>
+                    {% endfor %}
+
+                  </div>
+                {% endblock %}
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endblock %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": ["@imagexmedia/typescript/tsconfig.json"],
+  "include": [
+    "node_modules/@imagexmedia/*/types/**/*.ts",
+    "*/*/custom/**/*.ts"
+  ]
+}

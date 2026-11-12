@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Implements the Carousel tab content for the UI Kit.
+ *
+ * Displays usage of carousel within the theme.
+ */
+#}
+{% import '@bootstrap_ui_kit/ui-kit/' ~ section.id ~ '/' ~ section.id ~ '.macros.twig' as macros %}
+{% extends '@bootstrap_ui_kit/section.html.twig' %}
+
+{% block section_intro %}
+  {% trans %}
+    <p>A slideshow component for cycling through elements—images or slides of text—like a carousel.</p>
+  {% endtrans %}
+{% endblock %}
+
+{% block section_content %}
+  <div class="row">
+    <div class="col-12 col-md-9">
+
+      {% block carousel_dark %}
+      <div class="mb-5">
+        {{ macros.carousel('dark') }}
+      </div>
+      {% endblock %}
+
+      {% block carousel_light %}
+      <div class="mb-5">
+        {{ macros.carousel('light') }}
+      </div>
+      {% endblock %}
+
+    </div>
+  </div>
+{% endblock %}

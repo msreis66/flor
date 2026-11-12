@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+## Description: Build all or a single frontend component package.
+## Example: "ddev frontend-build [package_name|optional]"
+
+npm run build "${1:-}"

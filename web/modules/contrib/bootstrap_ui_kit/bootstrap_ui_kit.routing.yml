@@ -1,0 +1,23 @@
+bootstrap_ui_kit.ui_kit:
+  path: '/ui-kit'
+  defaults:
+    _controller: '\Drupal\bootstrap_ui_kit\Controller\BootstrapUiKitController::content'
+    _title: 'UI Kit Library'
+  requirements:
+    _permission: 'access bootstrap ui kit'
+
+bootstrap_ui_kit.settings:
+  path: '/admin/appearance/bootstrap_ui_kit/settings'
+  defaults:
+    _form: '\Drupal\bootstrap_ui_kit\Form\BootstrapUiKitSettingsForm'
+    _title: 'Bootstrap UI Kit - Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+bootstrap_ui_kit.glossary:
+  path: '/admin/appearance/bootstrap_ui_kit/glossary'
+  defaults:
+    _form: '\Drupal\bootstrap_ui_kit\Form\BootstrapUiKitGlossaryForm'
+    _title: 'Bootstrap UI Kit -  Glossary'
+  requirements:
+    _permission: 'administer site configuration'

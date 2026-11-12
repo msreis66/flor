@@ -1,0 +1,90 @@
+footer {
+  padding-top: 2.25rem;
+}
+
+.footer-sections {
+  & > * {
+    flex: 1;
+  }
+
+  .navbar {
+    display: grid;
+    row-gap: 16px;
+
+    .nav-item {
+      &:first-child {
+        span {
+          font-weight: bold;
+        }
+      }
+
+      a {
+        --bs-link-color-rgb: $white;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .block--block-footer-content-block {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    a:not(.btn) {
+      color: $primary;
+    }
+
+    .chat-icon {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      text-align: right;
+    }
+
+    .contact {
+      display: inline-flex;
+      align-items: baseline;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+
+      .social-media-links {
+        a {
+          padding: 0 8px;
+        }
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: auto;
+      margin-right: 80px;
+    }
+  }
+
+  .block-footer-about-block-menu {
+    .navbar {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 48px;
+    }
+  }
+
+  .block--block-footer-bottom-block {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: $small-font-size;
+
+    a {
+      color: $white;
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .block--block-footer-chat-block {
+    width: 100%;
+    text-align: right;
+  }
+}

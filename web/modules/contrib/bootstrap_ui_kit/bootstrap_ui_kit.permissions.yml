@@ -1,0 +1,7 @@
+access bootstrap ui kit:
+  title: 'Access the UI Kit page'
+  description: 'Grants access to users to the /ui-kit page.'
+
+access bootstrap ui kit dev mode:
+  title: 'Access developer mode'
+  description: 'Gives access to the developer modal with code snippet examples.'

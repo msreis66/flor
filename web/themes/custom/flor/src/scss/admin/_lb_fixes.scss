@@ -1,0 +1,519 @@
+#drupal-off-canvas {
+  .inline-block-list.lb-list {
+    .inline-block-list__item svg {
+      fill: $white;
+    }
+  }
+
+  .inline-block-list {
+    a:focus,
+    a {
+      color: $white !important;
+      background-color: $gray-700 !important;
+
+      &:hover {
+        border-color: $primary !important;
+      }
+    }
+  }
+
+  .layout-selection {
+    a:focus,
+    a {
+      color: $white !important;
+      background-color: $gray-700 !important;
+
+      &:hover {
+        border-color: $primary !important;
+      }
+    }
+  }
+
+  // Fix 'Move' block and 'Reorder sections' interface in Drupal off-canvas
+  .layout-builder-block-move,
+  .layout-builder-section-move {
+    optgroup {
+      color: initial;
+    }
+
+    .layout-builder-components-table,
+    .layout-builder-sections-table {
+      margin-top: rem(30px);
+
+      table {
+        width: 100%;
+
+        thead th {
+          padding: rem(10px) rem(5px);
+        }
+
+        .tabledrag-handle::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .bs_background--type .fieldset-wrapper > div > div input:checked + label,
+  .bs_responsive .fieldset-wrapper > div > div input:checked + label {
+    color: #fff;
+    background-color: $gray-700;
+  }
+}
+
+.ui-widget-overlay.ui-front {
+  opacity: 0.9 !important;
+  background-color: $gray-600 !important;
+}
+
+.layout-builder__message--overrides .messages {
+  background: none !important;
+}
+
+// UI Dialog
+.ui-dialog.ui-layout-builder-modal .ui-dialog-titlebar-close {
+  top: 50%;
+  right: 2rem;
+  width: rem(30px);
+  height: rem(30px);
+  margin-top: 0;
+  margin-right: 25px;
+  opacity: 0.6;
+  border: 0;
+  border-radius: 1.5rem;
+  outline: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMzgzYTQwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgODUuODEyIDg1LjgxMiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgODUuODEyIDg1LjgxMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PHBhdGggZD0iTTcwLjY5LDE0LjEyMWMtMTUuNjIxLTE1LjYyLTQwLjk0NS0xNS42Mi01Ni41NjgsMGMtMTUuNjIxLDE1LjYyLTE1LjYyLDQwLjk0NiwwLDU2LjU2NyAgIGMxNS42MjQsMTUuNjIzLDQwLjk0OSwxNS42MjMsNTYuNTY5LDAuMDAyQzg2LjMxMiw1NS4wNzEsODYuMzEzLDI5Ljc0NCw3MC42OSwxNC4xMjF6IE01NC44NzEsNTkuMjlMNDIuNDA2LDQ2LjgyNUwyOS45NDIsNTkuMjkgICBjLTEuMjIzLDEuMjIzLTMuMjAyLDEuMjIyLTQuNDIyLDAuMDAyYy0xLjIyMy0xLjIyNC0xLjIyMS0zLjIsMC00LjQyMmwxMi40NjYtMTIuNDY2TDI1LjUyMiwyOS45NDEgICBjLTEuMjIzLTEuMjIzLTEuMjIzLTMuMjAxLDAtNC40MjFjMS4yMTktMS4yMjIsMy4xOTktMS4yMjMsNC40MiwwbDEyLjQ2NSwxMi40NjRMNTQuODcsMjUuNTJjMS4yMjItMS4yMjIsMy4xOTktMS4yMjIsNC40MiwwLjAwMSAgIGMxLjIyMSwxLjIxOSwxLjIyMiwzLjE5OCwwLjAwMSw0LjQxOUw0Ni44MjYsNDIuNDA0bDEyLjQ2NSwxMi40NjZjMS4yMjIsMS4yMjIsMS4yMjIsMy4yMDEsMCw0LjQyMlM1Ni4wOTMsNjAuNTEyLDU0Ljg3MSw1OS4yOXoiPjwvcGF0aD48L2c+PC9zdmc+");
+  background-size: contain;
+}
+
+.ui-dialog.ui-layout-builder-modal.ui-widget-content {
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 1rem 3rem rgba($black, 0.35);
+}
+
+.ui-widget.media-library-widget-modal.ui-widget-content {
+  max-width: 1160px;
+}
+
+// Media Library: undo the Delta theme styles.
+#media-library-wrapper {
+  display: flex;
+  margin: 0;
+  margin-block-start: 0;
+  margin-inline: calc(var(--gin-spacing-m) * -1);
+}
+
+.ui-dialog.grid-widget-modal {
+  .ui-dialog-titlebar {
+    color: $gray-700 !important;
+    border-bottom: 1px solid $gray-700 !important;
+    background-color: $white !important;
+  }
+
+  .ui-dialog-titlebar-close {
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIiB3aWR0aD0iMjAiPgoJPHBhdGggZD0ibTI1Ni0yMDAtNTYtNTYgMjI0LTIyNC0yMjQtMjI0IDU2LTU2IDIyNCAyMjQgMjI0LTIyNCA1NiA1Ni0yMjQgMjI0IDIyNCAyMjQtNTYgNTYtMjI0LTIyNC0yMjQgMjI0WiIvPgo8L3N2Zz4=");
+    background-position: center center;
+    background-size: contain !important;
+
+    &:hover {
+      opacity: 1 !important;
+    }
+  }
+
+  .form-submit {
+    color: $white !important;
+  }
+
+  .ui-dialog-buttonset.form-actions {
+    display: flex;
+  }
+}
+
+.media-library-widget-modal {
+  // Set media library theme reset variables on LB.
+  /* stylelint-disable */
+  --input-border-size: 1px;
+  --base-border-radius: 2px;
+  --focus-border-size: 0.1875rem;
+  --focus-border-offset-size: 2px;
+  --outline-size: 2px;
+  --focus-outline: var(--outline-size) dotted transparent;
+  --focus-box-shadow: 0 0 0 var(--focus-border-offset-size) #fff, 0 0 0 calc(var(--focus-border-size) + var(--focus-border-offset-size)) #75767b;
+
+  --details-border-color: #dedfe4;
+  --details-summary-shadow-color: #75767b;
+  --details-summary-focus-border-size: var(--focus-border-size);
+  --details-desktop-wrapper-padding-start: calc(var(--space-m) + var(--space-s) + var(--space-xs));
+  --details-box-shadow: 0 2px 0.25rem rgba(0, 0, 0, 0.1);
+  --details-border-size: 1px;
+  --details-border-size-radius: 2px;
+  --details-accordion-border-size-radius: var(--base-border-radius);
+  --details-spread-box-shadow-radius: 2px;
+  --details-bg-color-transition-duration: 0.12s;
+  --details-box-shadow-transition-duration: 0.2s;
+  --details-transform-transition-duration: 0.12s;
+  --details-line-height: 1.295rem;
+  --space-xl: 3rem;
+  --space-l: 1.5rem;
+  --space-m: 1rem;
+  --space-s: 0.75rem;
+  --space-xs: 0.5rem;
+
+  --vertical-tabs-margin-vertical: var(--space-s);
+  --vertical-tabs-border-radius: var(--details-accordion-border-size-radius);
+  --vertical-tabs-shadow: var(--details-box-shadow);
+  --vertical-tabs-border-color: var(--details-border-color);
+  --vertical-tabs-border-size: 1px;
+  --vertical-tabs-border: var(--vertical-tabs-border-size) solid var(--vertical-tabs-border-color);
+  --vertical-tabs-menu-item-shadow-extraspace: 0.5rem;
+  --vertical-tabs-menu-item--top-margin: calc(var(--vertical-tabs-menu-item-shadow-extraspace) * -2);
+  --vertical-tabs-menu-item--right-margin: calc(var(--vertical-tabs-border-size) * -1);
+  --vertical-tabs-menu-item--bottom-margin: calc(var(--vertical-tabs-menu-item-shadow-extraspace) * -1);
+  --vertical-tabs-menu-item--left-margin: calc(var(--vertical-tabs-menu-item-shadow-extraspace) * -1);
+  --vertical-tabs-menu-separator-color: #d3d4d9;
+  --vertical-tabs-menu-separator-size: 1px;
+  --vertical-tabs-menu-width: 20em;
+  --vertical-tabs-pane-width: calc(100% - var(--vertical-tabs-menu-width));
+  --vertical-tabs-menu-link-focus-border-size: var(--details-summary-focus-border-size);
+  --vertical-tabs-menu-link--active-border-size: 0.25rem;
+  --vertical-tabs-menu-link--active-border-color: #55565b;
+  --vertical-tabs-menu--z-index: 0;
+  /* stylelint-enable */
+  .media-library-menu {
+    padding: 0;
+  }
+
+  .media-library-menu__link {
+    &:active,
+    &:hover,
+    :focus {
+      text-decoration-color: unset !important;
+      color: $secondary !important;
+    }
+  }
+
+  .button {
+    color: $gray-700 !important;
+    border-color: inherit !important;
+
+    &:hover {
+      color: $gray-700 !important;
+      border-color: inherit !important;
+    }
+  }
+
+  .media-library-add-form-oembed-submit {
+    width: auto !important;
+    color: $white !important;
+  }
+
+  .ui-dialog-titlebar {
+    color: $gray-700 !important;
+    border-bottom: 1px solid $gray-700 !important;
+    background-color: $white !important;
+  }
+
+  .ui-dialog-title {
+    color: $gray-700 !important;
+  }
+
+  .ui-dialog-titlebar-close {
+    top: 50%;
+    right: 2rem;
+    width: rem(30px) !important;
+    height: rem(30px) !important;
+    margin-top: 0 !important;
+    margin-right: 25px !important;
+    opacity: 0.6 !important;
+    border: 0 !important;
+    border-radius: 1.5rem !important;
+    outline: 0;
+    background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMzgzYTQwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgODUuODEyIDg1LjgxMiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgODUuODEyIDg1LjgxMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PHBhdGggZD0iTTcwLjY5LDE0LjEyMWMtMTUuNjIxLTE1LjYyLTQwLjk0NS0xNS42Mi01Ni41NjgsMGMtMTUuNjIxLDE1LjYyLTE1LjYyLDQwLjk0NiwwLDU2LjU2NyAgIGMxNS42MjQsMTUuNjIzLDQwLjk0OSwxNS42MjMsNTYuNTY5LDAuMDAyQzg2LjMxMiw1NS4wNzEsODYuMzEzLDI5Ljc0NCw3MC42OSwxNC4xMjF6IE01NC44NzEsNTkuMjlMNDIuNDA2LDQ2LjgyNUwyOS45NDIsNTkuMjkgICBjLTEuMjIzLDEuMjIzLTMuMjAyLDEuMjIyLTQuNDIyLDAuMDAyYy0xLjIyMy0xLjIyNC0xLjIyMS0zLjIsMC00LjQyMmwxMi40NjYtMTIuNDY2TDI1LjUyMiwyOS45NDEgICBjLTEuMjIzLTEuMjIzLTEuMjIzLTMuMjAxLDAtNC40MjFjMS4yMTktMS4yMjIsMy4xOTktMS4yMjMsNC40MiwwbDEyLjQ2NSwxMi40NjRMNTQuODcsMjUuNTJjMS4yMjItMS4yMjIsMy4xOTktMS4yMjIsNC40MiwwLjAwMSAgIGMxLjIyMSwxLjIxOSwxLjIyMiwzLjE5OCwwLjAwMSw0LjQxOUw0Ni44MjYsNDIuNDA0bDEyLjQ2NSwxMi40NjZjMS4yMjIsMS4yMjIsMS4yMjIsMy4yMDEsMCw0LjQyMlM1Ni4wOTMsNjAuNTEyLDU0Ljg3MSw1OS4yOXoiPjwvcGF0aD48L2c+PC9zdmc+") !important;
+    background-size: contain !important;
+  }
+
+  .views-exposed-form {
+    border: 0 !important;
+  }
+
+  .media-library--views-exposed-form {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    margin: 15px 0;
+    border-bottom: 1px solid $gray-700;
+
+    .form-select,
+    .form-text {
+      width: 100% !important;
+    }
+
+    .form-submit {
+      color: $white !important;
+    }
+  }
+
+  .ui-dialog-buttonpane {
+    flex-direction: column !important;
+    gap: 1rem !important;
+
+    .form-submit {
+      color: $white !important;
+    }
+  }
+
+  .media-library-add-form__description {
+    padding: 20px 0;
+  }
+
+  .media-library-add-form__fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    .form-text {
+      width: 100% !important;
+    }
+  }
+
+  .media-library-add-form__remove-button {
+    display: flex;
+    align-items: baseline;
+    padding: 0 20px !important;
+    background-color: white !important;
+    background-position: left;
+  }
+
+  div.messages,
+  div[data-drupal-messages] {
+    margin-bottom: $spacer;
+    padding: $alert-padding-y $alert-padding-x;
+    color: shade-color($info, 40%);
+    border: 1px solid shade-color($info, 20%);
+    border-radius: $border-radius;
+    background-color: tint-color($info, 80%);
+  }
+
+  .ajax-progress {
+    position: relative !important;
+    max-height: 45px !important;
+    border-radius: 0 !important;
+
+    &::before {
+      display: none !important;
+    }
+  }
+
+  .image-widget.js-form-managed-file.form-managed-file {
+    .button.js-form-submit.form-submit {
+      color: $white !important;
+      border-color: $gray-700 !important;
+      background-color: $gray-700 !important;
+    }
+  }
+
+  .media-library-item__click-to-select-checkbox {
+    input {
+      margin: 17px -10px !important;
+    }
+  }
+}
+
+// Media Library: Undo button color inherited from Delta theme.
+.ui-dialog {
+  .ui-dialog-buttonpane {
+    button {
+      color: inherit !important;
+    }
+  }
+
+  // Media Library: Adds the close button to the Media library modal.
+  .ui-dialog-titlebar-close {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='31.92 95.93 320.15 320.15'%3E%3Cpath d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256l105.3-105.4z'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 70%;
+  }
+}
+
+// Layout Builder Preview: UI Fixes.
+.layout-builder,
+.layout-builder-block {
+  background: transparent;
+}
+
+.layout-builder {
+  .layout-builder__link--configure,
+  .layout-builder__link--add-template-to-library {
+    color: #686868 !important;
+
+    &:hover {
+      color: #000 !important;
+    }
+  }
+}
+
+// Layout Builder Preview: LB form fixes.
+form[class*="layout-builder"] {
+  @include make-container;
+  /* stylelint-disable */
+  max-width: calc(map-get($container-max-widths, xxl));
+  /* stylelint-enable */
+
+  [data-drupal-selector="edit-preview-toggle"] {
+    margin: 1rem 0;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 1rem 0;
+    gap: 1rem;
+
+    input[type="submit"].button--primary {
+      width: inherit;
+    }
+  }
+
+  div.text-full {
+    a:not(.btn) {
+      text-decoration: none;
+      color: rgba($white, 0.5);
+      font-weight: normal;
+
+      &:hover {
+        text-decoration: underline;
+        color: rgba($white, 0.5);
+      }
+    }
+  }
+
+  .js-form-type-vertical-tabs {
+    padding: 1rem;
+    background: $white;
+
+    a {
+      &:hover,
+      &:active {
+        text-decoration: none;
+
+        .vertical-tabs__menu-item-title {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .js-form-item-revision {
+      padding: 1.2rem 0;
+    }
+
+    @include media-breakpoint-up("lg") {
+      padding: 0;
+    }
+  }
+}
+
+// Layout builder dialog: Reset css BS styles to apply Delta Table.
+#layout-builder-modal {
+  overflow-x: hidden;
+
+  .field--type-entity-reference,
+  .field--widget-paragraphs,
+  .field--type-link {
+    thead,
+    tr,
+    td,
+    th {
+      background: unset;
+    }
+  }
+
+  .js-layout-builder-section-library-link {
+    color: $white;
+  }
+
+  .error {
+    border-color: $danger !important;
+  }
+}
+
+// Layout builder dialog + CK5: Reset CK and bootstrap_styles css to match Delta styles.
+#layout-builder-modal {
+  /* stylelint-disable */
+  @import "lb_ckeditor_fixes";
+  /* stylelint-enable */
+
+  tr {
+    border-bottom: 1px solid $gray-700;
+  }
+
+  .form-wrapper .paragraphs-dropdown-action.button {
+    color: $gray-700;
+    border-color: $gray-700;
+
+    &:hover {
+      color: $gray-700;
+      border-color: $gray-700;
+    }
+  }
+
+  div[data-drupal-messages] {
+    color: $danger;
+  }
+
+  .bs_background--type .fieldset-wrapper > div > div input:checked + label,
+  .bs_responsive .fieldset-wrapper > div > div input:checked + label {
+    color: #fff;
+    background-color: $gray-700;
+  }
+
+  .js-media-library-open-button {
+    margin-top: 1rem;
+  }
+
+  h4 {
+    font-family: var(--off-canvas-font-family);
+    font-size: 1rem;
+  }
+}
+
+.layout-builder__section {
+  > div[class*="d-none"],
+  > div[class*="d-sm-none"],
+  > div[class*="d-md-none"],
+  > div[class*="d-lg-none"],
+  > div[class*="d-xl-none"],
+  > div[class*="d-xxl-none"] {
+    display: block !important;
+
+    &::before {
+      @include make-container;
+
+      display: block;
+      max-width: 1320px;
+      margin-bottom: 0.5rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      padding-left: 2rem;
+      content: 'Notice: The "d-none" class was detected and overridden for this section. The display is intentionally enabled in preview mode for clarity and testing purposes.';
+      color: $white;
+      border-left: 6px solid $warning;
+      background: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZTI5NzAwIiBoZWlnaHQ9IjE2IiB3aWR0aD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTE0LjY2IDEyLjMxNi01LjMxNi0xMC42MzNjLS43MzgtMS40NzYtMS45NDYtMS40NzYtMi42ODUgMGwtNS4zMTcgMTAuNjMzYy0uNzM4IDEuNDc3LjAwOCAyLjY4NCAxLjY1OCAyLjY4NGgxMC4wMDJjMS42NSAwIDIuMzk2LTEuMjA3IDEuNjU4LTIuNjg0em0tNy42Ni04LjMxNmgyLjAwMnY1aC0yLjAwMnptMi4yNTIgOC42MTVjMCAuMzQ0LS4yODEuNjI1LS42MjUuNjI1aC0xLjI1Yy0uMzQ1IDAtLjYyNi0uMjgxLS42MjYtLjYyNXYtMS4yMzljMC0uMzQ0LjI4MS0uNjI1LjYyNi0uNjI1aDEuMjVjLjM0NCAwIC42MjUuMjgxLjYyNS42MjV6Ii8+PC9zdmc+Cg==")
+        no-repeat 8px 20px $gray-900;
+      font-weight: 400;
+    }
+
+    &[class*="col-"] {
+      &::before {
+        content: 'Notice: The "d-none" class was detected and overridden for this column. The display is intentionally enabled in preview mode for clarity and testing purposes.';
+      }
+    }
+  }
+}
+
+.layout-builder__add-block {
+  background-color: $gray-100;
+}

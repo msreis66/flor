@@ -1,0 +1,9 @@
+.nav {
+  --bs-link-color: $gray-700;
+}
+
+.nav-tabs {
+  .nav-link.active {
+    color: $gold-darkest;
+  }
+}

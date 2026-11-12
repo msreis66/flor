@@ -1,0 +1,6 @@
+bootstrap_ui_kit.settings:
+  title: 'Bootstrap UI Kit'
+  description: Settings for the Bootstrap UI Kit.
+  parent: system.admin_config_ui
+  route_name: bootstrap_ui_kit.settings
+  weight: 100

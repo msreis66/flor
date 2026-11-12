@@ -1,0 +1,5 @@
+// @see https://github.com/twbs/bootstrap/blob/v5.2.1/scss/_maps.scss
+
+@use "sass:map";
+
+$theme-colors: map.merge($theme-colors, $custom-colors);

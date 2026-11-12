@@ -1,0 +1,17 @@
+global-theming:
+  js:
+    components/global/public/js/global.js: { minified: true }
+  css:
+    theme:
+      components/global/public/css/global.css: { minified: true }
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+media-library:
+  css:
+    base:
+      /core/themes/claro/css/base/variables.css: { }
+  dependencies:
+    - claro/views

@@ -1,0 +1,54 @@
+@use "sass:map";
+
+%material-symbols {
+  display: inline-block;
+  white-space: nowrap;
+  letter-spacing: normal;
+  text-transform: none;
+  word-wrap: normal;
+  direction: ltr;
+  font-size: var(--material-symbols-font-size);
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    "FILL" var(--material-symbols-fill),
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+%material-symbols-outlined {
+  @extend %material-symbols;
+
+  font-family: $font-family-material-symbols-outlined;
+}
+
+.material-symbols-outlined {
+  --material-symbols-fill: 0;
+  --material-symbols-font-size: #{rem(24px)};
+
+  @extend %material-symbols-outlined;
+}
+
+.material-symbols-fill {
+  --material-symbols-fill: 1;
+  --material-symbols-font-size: #{rem(24px)};
+
+  @extend %material-symbols-outlined;
+}
+
+// Headings
+h1 {
+  @include media-breakpoint-down(lg) {
+    font-size: rem(32px);
+  }
+}
+
+blockquote {
+  padding-left: rem(20px);
+  color: var(--#{$prefix}body-color);
+  border-left: rem(3px) solid var(--#{$prefix}teal-dark);
+  font-size: $h6-font-size;
+}

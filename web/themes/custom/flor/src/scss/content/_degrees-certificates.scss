@@ -1,0 +1,75 @@
+.view-display--list-page {
+  .degrees-certificates--list {
+    border-bottom: rem(1px) solid $gray-300;
+
+    &:hover,
+    &:has(.pinned) {
+      border-color: transparent;
+
+      .content {
+        background-color: rgba($gray-100, 0.3);
+      }
+    }
+
+    .area-of-study-card-icon {
+      width: rem(40px);
+      height: rem(40px);
+      padding: rem(8px);
+      border-radius: rem(40px);
+
+      svg {
+        height: rem(24px);
+      }
+    }
+
+    .feature-flag {
+      padding: rem(4px 10px);
+      border-radius: 0 0 var(--#{$prefix}border-radius-xl) var(--#{$prefix}border-radius-xl);
+
+      @include media-breakpoint-down(lg) {
+        position: absolute;
+        top: rem(-29px);
+        left: rem(16px);
+        border-radius: var(--#{$prefix}border-radius-xl) var(--#{$prefix}border-radius-xl) 0 0;
+      }
+    }
+
+    .pin {
+      top: rem(-13px);
+      right: rem(-10px);
+      width: rem(56px);
+
+      @include media-breakpoint-up(lg) {
+        top: rem(-30px);
+        right: rem(-30px);
+      }
+    }
+
+    .primary-skill {
+      padding: rem(2px 12px);
+    }
+
+    .skills-tooltip-toggle {
+      &:hover {
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    &:has(+ .degrees-certificates--list:hover) {
+      border-color: transparent;
+    }
+
+    &:last-child {
+      border-color: transparent;
+    }
+  }
+}
+
+.sjdc-tooltip {
+  --#{$prefix}tooltip-color: var(--#{$prefix}gray-700);
+  --#{$prefix}tooltip-bg: var(--#{$prefix}gold-dark);
+}
+
+.skills-tooltip {
+  margin-left: rem(10px) !important;
+}

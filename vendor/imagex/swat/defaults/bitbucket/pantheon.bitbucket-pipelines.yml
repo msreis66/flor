@@ -1,0 +1,118 @@
+# Use DDEV images, utilizing ENV Vars for versions.
+image:
+  name: ddev/ddev-webserver:v1.24.4
+
+# =========================================================
+#   Script Definitions
+#   - Do not edit this section.
+# =========================================================
+script_definitions:
+  - &env-setup |
+    export PHP_VERSION=$(yq '.php_version // "8.4"' .ddev/config.yaml) && \
+    export COMPOSER_VERSION=$(yq '.composer_version // "2.8.8"' .ddev/config.yaml) && \
+    export NODE_VERSION=$(yq '.nodejs_version // "22"' .ddev/config.yaml) && \
+    export BIN_DIR=$BITBUCKET_CLONE_DIR/vendor/bin && \
+    source ~/.profile && \
+    git config --global --add safe.directory /opt/atlassian/pipelines/agent/build && \
+    ln -sf /usr/bin/php${PHP_VERSION} /usr/bin/php && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
+    ln -sf /usr/bin/node /usr/local/bin/node && \
+    ln -sf /usr/bin/npm /usr/local/bin/npm && \
+    composer self-update ${COMPOSER_VERSION}
+  - &composer-tasks
+    composer install --no-interaction --optimize-autoloader
+
+# =========================================================
+#   Step Definitions
+#   - Only edit this section to customize your pipeline.
+# =========================================================
+step_definitions:
+  - validate: &validate
+      name: 'Validation Tasks.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - ${BIN_DIR}/swat validate --no-interaction
+  - deploy-branch: &deploy-branch
+      name: 'Deploy branch to remote.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - ${BIN_DIR}/swat -vvv artifact:deploy --commit-msg "Bitbucket build - $BITBUCKET_BUILD_NUMBER, Commit $BITBUCKET_COMMIT" --branch "$BITBUCKET_BRANCH" --no-interaction
+  - update-configs-dev: &update-configs-dev
+      name: 'Update configs on DEV.'
+      script:
+        - . ~/.profile
+        - *env-setup
+        - terminus auth:login --machine-token="${SECRET_TERMINUS_TOKEN}" -y
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.dev deploy -y
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.dev cr
+        - terminus env:clear-cache ${PANTHEON_SITE_NAME}.dev
+  - update-configs-multidev: &update-configs-multidev
+      name: 'Update configs on Multidev environment.'
+      caches:
+        - composer
+      script:
+        - . ~/.profile
+        - *env-setup
+        - terminus auth:login --machine-token="${SECRET_TERMINUS_TOKEN}" -y
+        # Create the multidev environment only if it doesn't already exist
+        - >-
+          if ! terminus multidev:list ${PANTHEON_SITE_NAME} --field=Name | grep -q "^${BITBUCKET_BRANCH}$"; then
+            echo "Creating multidev environment: ${BITBUCKET_BRANCH}";
+            terminus multidev:create ${PANTHEON_SITE_NAME}.dev ${BITBUCKET_BRANCH} --yes;
+          else
+            echo "Multidev environment ${BITBUCKET_BRANCH} already exists. Skipping creation.";
+          fi
+        # Run the deployment hooks and clear cache
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.${BITBUCKET_BRANCH} deploy -y
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.${BITBUCKET_BRANCH} cr
+        - terminus env:clear-cache ${PANTHEON_SITE_NAME}.${BITBUCKET_BRANCH}
+  - deploy-to-test: &deploy-to-test
+      name: "Deploy Code from DEV to TEST ENV"
+      script:
+        - . ~/.profile
+        - *env-setup
+        - terminus auth:login --machine-token="${SECRET_TERMINUS_TOKEN}" -y
+        - terminus env:deploy ${PANTHEON_SITE_NAME}.test --no-interaction --note $BITBUCKET_COMMIT
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.test deploy -y
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.test cr
+        - terminus env:clear-cache ${PANTHEON_SITE_NAME}.test
+  - deploy-tag-to-live: &deploy-tag-to-live
+      name: "Deploy Code from TEST to PROD ENV"
+      script:
+        - . ~/.profile
+        - *env-setup
+        - terminus auth:login --machine-token="${SECRET_TERMINUS_TOKEN}" -y
+        - terminus env:deploy ${PANTHEON_SITE_NAME}.live --no-interaction --note $BITBUCKET_COMMIT
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.live deploy -y
+        - terminus remote:drush ${PANTHEON_SITE_NAME}.live cr
+        - terminus env:clear-cache ${PANTHEON_SITE_NAME}.live
+
+# =========================================================
+#   Pipeline Definitions
+#   - Edit this section based on your project workflow.
+# =========================================================
+pipelines:
+  pull-requests:
+    '**':
+      - step: *validate
+  branches:
+    master:
+      - step: *validate
+      - step: *deploy-branch
+      - step: *update-configs-dev
+    stage:
+      - step: *deploy-to-test
+    md-*:
+      - step: *validate
+      - step: *deploy-branch
+      - step: *update-configs-multidev
+  tags:
+    'release/*':
+      - step: *deploy-tag-to-live

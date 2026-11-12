@@ -1,0 +1,109 @@
+// These rule applies under #layout-builder id rule.
+@import "bootstrap/scss/helpers/ratio";
+
+.ck-content {
+  .table {
+    table {
+      border: 0;
+    }
+
+    th.ck-editor__editable.ck-editor__nested-editable.ck-editor__nested-editable_focused {
+      background: rgba($table-th-bg-color, 0.9);
+    }
+
+    td.ck-editor__editable.ck-editor__nested-editable.ck-editor__nested-editable_focused {
+      background: $white;
+    }
+
+    > &:not(:first-child) {
+      color: initial;
+      border: initial;
+    }
+
+    tr {
+      border-bottom: 1px solid $gray-700;
+
+      &:hover {
+        background-color: $gray-100;
+
+        td {
+          background-color: $gray-100;
+        }
+      }
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      border: 0;
+      background: $white;
+    }
+
+    thead,
+    th {
+      color: $gray-700;
+      background-color: transparent;
+      font-size: $h6-font-size;
+      font-weight: 700;
+    }
+
+    td {
+      color: $gray-700;
+    }
+
+    &.table-striped {
+      > tbody > tr {
+        &:hover {
+          td {
+            background-color: $table-bg;
+          }
+        }
+
+        &:nth-of-type(odd) {
+          > * {
+            background-color: $table-striped-bg;
+          }
+        }
+      }
+    }
+  }
+
+  hr {
+    height: 0;
+    margin: $hr-margin-y 0;
+    opacity: $hr-opacity;
+    color: $hr-color;
+    border-top: 1px solid $hr-color;
+  }
+
+  ul,
+  ol {
+    &:has(p[class^="text-align-"]) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &:has(p.text-align-left) {
+      li {
+        align-self: start;
+      }
+    }
+
+    &:has(p.text-align-center) {
+      li {
+        align-self: center;
+      }
+    }
+
+    &:has(p.text-align-right) {
+      li {
+        align-self: end;
+      }
+    }
+  }
+
+  [data-view-mode="ckeditor_embedded_video"] {
+    @extend .ratio;
+    @extend .ratio-16x9;
+  }
+}

@@ -1,0 +1,33 @@
+{# Accordion #}
+{% macro accordion(alwaysOpen, numItems, collapsed, headerAs) %}
+  {% set id = random(0, 10000) %}
+  <div class="accordion" id="{{ 'accordion-' ~ id }}">
+    {% for i in 1..numItems %}
+      {% set collapseHeadingId = 'collapse__heading-' ~ id ~ '-' ~ loop.index %}
+      <div class="accordion-item">
+        <{{ headerAs|default('h2') }} class="accordion-header" id="{{ collapseHeadingId }}">
+          <button class="accordion-button {{ collapsed is not same as(true) and loop.index == 1 ? '' : 'collapsed'}}"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#{{ 'collapse-' ~ id ~ loop.index }}"
+                  aria-expanded="{{ collapsed is not same as(true) and loop.index == 1 ? 'true' : 'false'}}"
+                  aria-controls="{{ 'collapse-' ~ id ~ loop.index }}">
+            {{ 'Accordion Item #:index'|t({ ':index': loop.index }) }}
+          </button>
+        </{{ headerAs|default('h2') }}>
+
+        <div id="{{ 'collapse-' ~ id ~ loop.index }}"
+             class="accordion-collapse collapse {{ collapsed is not same as(true) and loop.index == 1 ? 'show' : ''}}"
+             aria-labelledby="#{{ collapseHeadingId }}"
+          {% if alwaysOpen %} data-bs-parent="#accordion-{{ id }}" {% endif %}>
+          <div class="accordion-body">
+            {% trans %}
+              <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            {% endtrans %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+

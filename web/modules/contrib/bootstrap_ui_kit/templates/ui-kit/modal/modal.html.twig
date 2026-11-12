@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Implements the Modal tab content for the UI Kit.
+ *
+ * Displays usage of modal within the theme.
+ */
+#}
+{% extends '@bootstrap_ui_kit/section.html.twig' %}
+
+{% block section_intro %}
+  {% trans %}
+    <p>A slideshow component for cycling through elements—images or slides of text—like a carousel.</p>
+  {% endtrans %}
+{% endblock %}
+
+{% block section_content %}
+  {% set headerAs = headerAs|default('h5') %}
+  <div class="bg-dark bg-opacity-10 p-5 rounded-1">
+    <div class="modal position-static d-block" tabindex="-1">
+      <div class="modal-dialog{{ modalSize ? ' modal-' ~ modalSize }}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <{{ headerAs }} class="modal-title">{{ 'Modal title'|t }}</{{ headerAs }}>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ 'Modal body text goes here.'|t }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Close'|t }}</button>
+          <button type="button" class="btn btn-primary">{{ 'Save changes'|t }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+{% endblock %}
+

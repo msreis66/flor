@@ -1,0 +1,1 @@
+*/30 * * * * /usr/src/app/vendor/bin/drush cron | tee -a /var/log/cron.log

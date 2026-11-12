@@ -1,0 +1,18 @@
+# Ignore Development tool files.
+.idea
+.editorconfig
+node_modules
+.vscode/
+.sass-cache/
+css
+libraries
+
+# Sass
+.sass-cache
+*.css.map
+
+# vendor
+vendor
+
+# obsidian
+.obsidian

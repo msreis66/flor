@@ -1,0 +1,22 @@
+
+
+> build
+> swat build
+
+[36mvite v7.3.1 [32mbuilding client environment for dev...[36m[39m
+[2K[1Gtransforming (1) [2msrc/js/bootstrap.ts[22m[2K[1Gtransforming (30) [2m../../../../../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js[22m[2K[1Gtransforming (64) [2msrc/scss/global.scss[22m[2K[1G[32m✓[39m 65 modules transformed.
+[2K[1Grendering chunks (1)...[2K[1Grendering chunks (2)...[2K[1Grendering chunks (3)...[2K[1Grendering chunks (4)...[2K[1Grendering chunks (5)...[2K[1Grendering chunks (6)...[2K[1G[2K[1Gcomputing gzip size (0)...[2K[1Gcomputing gzip size (1)...[2K[1Gcomputing gzip size (2)...[2K[1Gcomputing gzip size (3)...[2K[1Gcomputing gzip size (4)...[2K[1Gcomputing gzip size (5)...[2K[1Gcomputing gzip size (6)...[2K[1Gcomputing gzip size (7)...[2K[1G[2mpublic/[22m[2massets/[22m[32micons-sprite.svg  [39m[1m[2m  2.41 kB[22m[1m[22m[2m │ gzip:  1.16 kB[22m
+[2mpublic/[22m[35mcss/dialog.css           [39m[1m[2m  2.31 kB[22m[1m[22m[2m │ gzip:  1.16 kB[22m
+[2mpublic/[22m[35mcss/global.css           [39m[1m[2m195.88 kB[22m[1m[22m[2m │ gzip: 28.15 kB[22m
+[2mpublic/[22m[35mcss/ckeditor.css         [39m[1m[2m217.28 kB[22m[1m[22m[2m │ gzip: 28.73 kB[22m
+[2mpublic/[22m[36mjs/header.js             [39m[1m[2m  0.23 kB[22m[1m[22m[2m │ gzip:  0.19 kB[22m[2m │ map:   0.51 kB[22m
+[2mpublic/[22m[36mjs/global.js             [39m[1m[2m  0.97 kB[22m[1m[22m[2m │ gzip:  0.49 kB[22m[2m │ map:   1.59 kB[22m
+[2mpublic/[22m[36mjs/bootstrap.js          [39m[1m[2m169.79 kB[22m[1m[22m[2m │ gzip: 35.66 kB[22m[2m │ map: 329.70 kB[22m
+[32m✓ built in 1.21s[39m
+
+✨ [36m[vite-plugin-image-optimizer][39m - optimized images successfully: 
+[2mpublic[22m/[94massets/icons-sprite.svg[39m  [90m   [39m [2mNaN kB ⭢  2.35 kB[22m
+[2mpublic[22m/[94massets/imagex.svg[39m        [90m[32m-22%[39m[90m   [39m [2m2.76 kB ⭢  2.16 kB[22m
+
+
+⠙[1G[0K⠙[1G[0K

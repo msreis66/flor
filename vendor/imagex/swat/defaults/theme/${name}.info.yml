@@ -1,0 +1,25 @@
+name: ${human_name}
+type: theme
+description: ${description}
+base theme: false
+core_version_requirement: ^10 || ^11
+
+libraries:
+  - ${name}/global-theming
+
+libraries-override:
+  claro/claro.drupal.dialog:
+    css:
+      theme:
+        css/components/dialog.css: false
+
+regions:
+  header_top: Header Top
+  navigation: Navigation
+  content_top: Content Top
+  sidebar: Sidebar
+  content: Content
+  footer: Footer
+
+ckeditor5-stylesheets:
+  - components/global/public/css/ckeditor.css

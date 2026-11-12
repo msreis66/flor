@@ -1,0 +1,40 @@
+global-theming:
+  js:
+    components/global/public/js/global.js: { minified: true }
+    components/global/public/js/bootstrap.js: { minified: true }
+  css:
+    theme:
+      components/global/public/css/global.css: { minified: true }
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+header:
+  js:
+    components/global/public/js/header.js: { minified: true }
+
+# Component Example.
+component.tooltip:
+  js:
+    components/tooltip/public/js/tooltip.js: { minified: true }
+  css:
+    component:
+      components/tooltip/public/css/tooltip.css: { minified: true }
+  dependencies:
+    - core/drupal
+    - core/once
+
+drupal.dialog:
+  css:
+    theme:
+      components/global/public/css/dialog.css: {}
+  dependencies:
+    - gin/dialog
+
+media-library:
+  css:
+    base:
+      /core/themes/claro/css/base/variables.css: {}
+  dependencies:
+    - claro/views

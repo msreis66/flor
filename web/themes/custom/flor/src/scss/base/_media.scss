@@ -1,0 +1,27 @@
+p:has(img[data-align="left"]),
+p:has(img[data-align="right"]) {
+  @include clearfix;
+}
+
+img[data-align="left"] {
+  display: flex;
+  justify-self: start;
+
+  p & {
+    float: left;
+  }
+}
+
+img[data-align="center"] {
+  display: flex;
+  justify-self: center;
+}
+
+img[data-align="right"] {
+  display: flex;
+  justify-self: end;
+
+  p & {
+    float: right;
+  }
+}

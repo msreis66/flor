@@ -1,0 +1,79 @@
+/*
+* UI Kit styling.
+*/
+
+/* Copy this block to your theme to override colors. */
+:root {
+  --bootstrap-ui-kit--sidebar-bg-color: var(--bs-primary, #0d6efd);
+  --bootstrap-ui-kit--sidebar-text-color: var(--bs-white, white);
+  --bootstrap-ui-kit--nav-link-color: var(--bs-white, white);
+  --bootstrap-ui-kit--nav-link-hover-color: var(--bs-white, white);
+  --bootstrap-ui-kit--nav-link-active-color: var(--bs-white, white);
+  --bootstrap-ui-kit--nav-link-active-bg-color: var(--bs-white-rgb, (255, 255, 255));
+  --bootstrap-ui-kit--nav-link-active-indicator-color: var(--bs-secondary, #6c757d);
+  --bootstrap-ui-kit--icon-hover-color: var(--bs-primary, #0d6efd);
+  --bootstrap-ui-kit--fs-lg: var(--bs-btn-font-size, 20px);
+}
+
+/* Leave these to the defaults. */
+.bootstrap-ui-kit__sidebar {
+  min-width: 4rem;
+  background-color: var(--bootstrap-ui-kit--sidebar-bg-color);
+  color: var(--bootstrap-ui-kit--sidebar-text-color);
+}
+
+@media only screen and (min-width: 991px) {
+  .bootstrap-ui-kit__sidebar {
+    position: fixed !important;
+    min-height: 100vh;
+  }
+}
+
+/* Iconography icon hover effect (dev_mode). */
+.bootstrap-ui-kit .btn-copy__icon:hover {
+  cursor: pointer;
+  color: var(--bootstrap-ui-kit--icon-hover-color);
+  transition: color .2s ease-in-out;
+}
+
+/* Code blocks */
+.bootstrap-ui-kit code {
+  border-radius: .5rem;
+}
+
+/* Sidebar navigation links */
+.bootstrap-ui-kit .nav-link {
+  color: var(--bootstrap-ui-kit--nav-link-color);
+}
+
+.bootstrap-ui-kit .nav-link:hover {
+  color: var(--bootstrap-ui-kit--nav-link-color);
+  background-color: rgba(var(--bootstrap-ui-kit--nav-link-active-bg-color), .05);
+  text-decoration: underline;
+}
+
+.bootstrap-ui-kit .nav-pills .nav-link.active,
+.bootstrap-ui-kit .nav-pills .show > .nav-link {
+  padding-left: 3rem;
+  color: var(--bootstrap-ui-kit--nav-link-active-color);
+  background-color: rgba(var(--bootstrap-ui-kit--nav-link-active-bg-color), .1);
+  box-shadow: inset 5px 0 0 var(--bootstrap-ui-kit--nav-link-active-indicator-color);
+}
+
+/* Placeholders */
+.bootstrap-ui-kit .placeholder-glow .placeholder {
+  min-width: 3rem;
+}
+
+/* Font sizes */
+.bootstrap-ui-kit [data-ui-kit-font-size="lg"] {
+  font-size: var(--bootstrap-ui-kit--fs-lg);
+}
+
+.bootstrap-ui-kit .overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+}
+
+.bootstrap-ui-kit .list-style-lower-roman {
+  list-style-type: lower-roman;
+}

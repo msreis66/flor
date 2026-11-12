@@ -1,0 +1,52 @@
+enable_dev_kit: true
+icons_source_folder: /modules/contrib/bootstrap_ui_kit/vendor/twbs/bootstrap-icons/icons
+icons_sprite_file: /modules/contrib/bootstrap_ui_kit/vendor/twbs/bootstrap-icons/bootstrap-icons.svg
+glossary:
+  foundations:
+    title: Foundations
+    weight: -10
+    sections:
+      color:
+        title: Color
+        modal: false
+        weight: -9
+      iconography:
+        title: Iconography
+        modal: false
+        weight: -8
+      typography:
+        title: Typography
+        modal: false
+        weight: -7
+  components:
+    title: Components
+    weight: -6
+    sections:
+      accordions:
+        title: Accordions
+        modal: false
+        weight: -5
+      alerts:
+        title: Alerts
+        modal: false
+        weight: -4
+      buttons_links:
+        title: 'Buttons & Links'
+        modal: false
+        weight: -3
+      card:
+        title: Cards
+        modal: false
+        weight: -2
+      carousel:
+        title: Carousel
+        modal: false
+        weight: -1
+      modal:
+        title: Modal
+        modal: false
+        weight: 0
+      navigation:
+        title: Navigation
+        modal: false
+        weight: 1

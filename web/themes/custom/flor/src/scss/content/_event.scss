@@ -1,0 +1,38 @@
+.event {
+  &-disclaimer {
+    &-details {
+      background-color: rgba($gray-100, 0.5);
+
+      &-items {
+        --#{$prefix}link-color-rgb: var(--#{$prefix}body-color);
+
+        a:hover {
+          --#{$prefix}link-color-rgb: var(--#{$prefix}gray-800);
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        order: 1;
+      }
+    }
+
+    &-summary {
+      @include media-breakpoint-up(lg) {
+        order: 2;
+      }
+    }
+  }
+
+  &-body {
+    h2,
+    h3 {
+      color: var(--#{$prefix}gray-700);
+    }
+  }
+}
+
+.row-list {
+  .event-card {
+    margin-bottom: 1.5rem;
+  }
+}

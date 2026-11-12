@@ -1,0 +1,11 @@
+bootstrap_ui_kit.glossary_tab:
+  route_name: bootstrap_ui_kit.glossary
+  base_route: bootstrap_ui_kit.settings
+  title: 'Glossary'
+  weight: 10
+
+bootstrap_ui_kit.settings_tab:
+  route_name: bootstrap_ui_kit.settings
+  base_route: bootstrap_ui_kit.settings
+  title: 'Settings'
+  weight: 0

@@ -1,0 +1,65 @@
+# UI Kit
+bootstrap-ui-kit:
+  version: VERSION
+  css:
+    theme:
+      css/bootstrap-ui-kit.css: {}
+  js:
+    js/bootstrap-ui-kit.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Syntax/code highlighting
+bootstrap-ui-kit.highlight-js:
+  version: VERSION
+  css:
+    theme:
+      https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/a11y-dark.min.css: { external: true, minified: true }
+      https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.css: { external: true, minified: true }
+  js:
+    https://unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js: { external: true, minified: true }
+    https://unpkg.com/@highlightjs/cdn-assets@11.7.0/languages/twig.min.js: { external: true, minified: true }
+    https://unpkg.com/@highlightjs/cdn-assets@11.7.0/languages/php.min.js: { external: true, minified: true }
+    https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js: { external: true, minified: true }
+    js/bootstrap-ui-kit-highlight-js.js: {}
+  dependencies:
+    - bootstrap_ui_kit/bootstrap-ui-kit
+
+# Typography
+bootstrap-ui-kit.typography:
+  version: VERSION
+  js:
+    templates/ui-kit/typography/typography.js: {}
+  dependencies:
+    - bootstrap_ui_kit/bootstrap-ui-kit
+
+# Iconography
+bootstrap-ui-kit.iconography:
+  version: VERSION
+  css:
+    theme:
+      templates/ui-kit/iconography/iconography.css: {}
+  js:
+    templates/ui-kit/iconography/iconography.js: {}
+  dependencies:
+    - bootstrap_ui_kit/bootstrap-ui-kit
+
+# Color
+bootstrap-ui-kit.color:
+  version: VERSION
+  js:
+    templates/ui-kit/color/color.js: {}
+  dependencies:
+    - bootstrap_ui_kit/bootstrap-ui-kit
+
+# Glossary Form
+bootstrap-ui-kit.glossary-form:
+  version: VERSION
+  js:
+    js/glossary-form.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/jquery
+    - core/jquery.ui.dialog

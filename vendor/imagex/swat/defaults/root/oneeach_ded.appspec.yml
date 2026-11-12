@@ -1,0 +1,22 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/html/{APP_NAME}
+permissions:
+  - object: /var/www/html/{APP_NAME}
+    owner: ec2-user
+    group: apache
+    type:
+      - directory
+      - file
+hooks:
+  BeforeInstall:
+#    - location: scripts/aws/runComposerInstall.sh
+#      timeout: 600
+#    - location: scripts/aws/runNpmBuild.sh
+#      timeout: 300
+#      runas: ec2-user
+    - location: scripts/aws/runDrushCommands.sh
+      timeout: 300
+      runas: ec2-user

@@ -1,0 +1,110 @@
+# Use DDEV images, utilizing ENV Vars for versions.
+image:
+  name: ddev/ddev-webserver:v1.24.4
+
+# =========================================================
+#   Script Definitions
+#   - Do not edit this section.
+# =========================================================
+script_definitions:
+  - &env-setup |
+    export PHP_VERSION=$(yq '.php_version // "8.4"' .ddev/config.yaml) && \
+    export COMPOSER_VERSION=$(yq '.composer_version // "2.8.8"' .ddev/config.yaml) && \
+    export NODE_VERSION=$(yq '.nodejs_version // "22"' .ddev/config.yaml) && \
+    export BIN_DIR=$BITBUCKET_CLONE_DIR/vendor/bin && \
+    source ~/.profile && \
+    git config --global --add safe.directory /opt/atlassian/pipelines/agent/build && \
+    ln -sf /usr/bin/php${PHP_VERSION} /usr/bin/php && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
+    ln -sf /usr/bin/node /usr/local/bin/node && \
+    ln -sf /usr/bin/npm /usr/local/bin/npm && \
+    composer self-update ${COMPOSER_VERSION}
+  - &composer-tasks
+    composer install --no-interaction --optimize-autoloader
+  - &build-frontend
+      ${BIN_DIR}/swat frontend
+  - &determine-group
+      if [[ $BITBUCKET_BRANCH == 'develop' ]]; then export DEPLOYMENT_GROUP=$DEPLOYMENT_GROUP_DEV; elif [[ $BITBUCKET_BRANCH == 'staging' ]]; then export DEPLOYMENT_GROUP=$DEPLOYMENT_GROUP_STAGE; elif [[ $BITBUCKET_BRANCH == 'production' ]]; then export DEPLOYMENT_GROUP=$DEPLOYMENT_GROUP_PROD; fi
+
+# =========================================================
+#   Step Definitions
+#   - Only edit this section to customize your pipeline.
+# =========================================================
+step_definitions:
+  - validate: &validate
+      name: 'Validation Tasks.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - ${BIN_DIR}/swat validate --no-interaction
+  - deploy-branch: &deploy-branch
+      name: 'Build & Deploy AWS Package.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - *build-frontend
+        - zip -r --exclude=*.git* --exclude=*/.ddev* $BITBUCKET_COMMIT-$(date +%Y-%m-%d).zip .
+        - *determine-group
+        - pipe: atlassian/aws-code-deploy:0.5.0
+          variables:
+            AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+            AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+            APPLICATION_NAME: $APPLICATION_NAME
+            COMMAND: 'upload'
+            ZIP_FILE: $BITBUCKET_COMMIT-$(date +%Y-%m-%d).zip
+            S3_BUCKET: $S3_BUCKET
+            VERSION_LABEL: $BITBUCKET_COMMIT
+        - pipe: atlassian/aws-code-deploy:0.5.0
+          variables:
+            AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+            AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+            APPLICATION_NAME: $APPLICATION_NAME
+            DEPLOYMENT_GROUP: $DEPLOYMENT_GROUP
+            S3_BUCKET: $S3_BUCKET
+            WAIT: 'true'
+            COMMAND: 'deploy'
+            VERSION_LABEL: $BITBUCKET_COMMIT
+            IGNORE_APPLICATION_STOP_FAILURES: 'true'
+            FILE_EXISTS_BEHAVIOR: 'OVERWRITE'
+
+# =========================================================
+#   Service Definitions
+#   - Edit this section based on your project workflow.
+# =========================================================
+definitions:
+  services:
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: 'drupal'
+        MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+        MYSQL_USER: 'drupal'
+        MYSQL_PASSWORD: 'drupal'
+
+# =========================================================
+#   Pipeline Definitions
+#   - Edit this section based on your project workflow.
+# =========================================================
+pipelines:
+  default:
+    - step: *validate
+  pull-requests:
+    '**':
+      - step: *validate
+  branches:
+    develop:
+      - step: *validate
+      - step: *deploy-branch
+    staging:
+      - step: *validate
+      - step: *deploy-branch
+    production:
+      - step: *validate
+      - step: *deploy-branch

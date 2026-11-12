@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+## Description: Build and watch for changes in a frontend component package.
+## Example: "ddev frontend-watch"
+
+npm run watch "${1:-}"

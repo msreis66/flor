@@ -1,0 +1,12 @@
+.article {
+  &--full {
+    h2,
+    h3 {
+      color: var(--#{$prefix}gray-700);
+    }
+
+    .article-image img {
+      margin: rem(24px 0);
+    }
+  }
+}

@@ -1,0 +1,13 @@
+services:
+  bootstrap_ui_kit.file_get_contents:
+    class: Drupal\bootstrap_ui_kit\TwigExtension\FileGetContents
+    tags:
+      - { name: twig.extension }
+
+  bootstrap_ui_kit.macro_autoload:
+    class: Drupal\bootstrap_ui_kit\TwigExtension\MacroAutoloadTwigExtension
+    public: false
+    arguments:
+      - ['macros_color_swatch', 'function_name_2']
+    tags:
+      - { name: twig.extension }

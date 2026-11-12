@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Implements the Boilerplate tab content for the UI Kit.
+ *
+ * Displays usage of boilerplate elements within the theme.
+ *
+ * Available variables:
+ * - key: The top-level category this section belongs to.
+ * - section: The current section designated by the glossary array.
+ *  - modal: Turn the developer modal on and off. [0 or 1]
+ *  - path: Location where your custom section lives. [active_theme, ]
+ *  - id: Override your section id with a custom one for cleaner folder structures. [default: $key]
+ *  - title: A friendly title for the sidebar & section. [default: 1]
+ */
+#}
+{#{% import '@bootstrap_ui_kit/ui-kit/' ~ section.id ~ '/' ~ section.id ~ '.macros.twig' as macros %}#}
+{% extends '@bootstrap_ui_kit/section.html.twig' %}
+
+{% block section_intro %}
+  {% trans %}
+  <p>🎨 Boilerplate UI Kit section template.</p>
+  {% endtrans %}
+{% endblock %}
+
+{% block section_content %}
+  {% trans %}
+    <h2 class="mb-4">🔥 BOOM. Nice work, you did it!</h2>
+    <p class="mb-4 lead">Now what?</p>
+  {% endtrans %}
+
+  <ol>
+    <li>{{ 'Clear cache & refresh baby!'|t }}</li>
+  </ol>
+
+  {% trans %}
+    <p class="mt-5 lead">🎉 Woot! Now get out there and start building some sweet components!</p>
+    <div class="alert alert-info">
+      <p>Note: Click the developer modal (dev_mode needs to be enabled) which provides example usage for elements, or override in your custom section!</p>
+      <hr/>
+      <p>Auto-discovery is enabled and will load sections & docs in the following order;</p>
+      <ol class="mb-3">
+        <li><code>custom path</code> (machine name of custom theme or module)</li>
+        <li><code>active theme</code></li>
+        <li><code>base theme</code></li>
+        <li><code>defaults</code> (bootstrap_ui_kit module)</li>
+        <li><code>boilerplate</code> (how-to fallback, aka. this file)</li>
+      </ol>
+    </div>
+  {% endtrans %}
+{% endblock %}
+
+{% block modal_body %}
+{% set boilerplate_template = '@bootstrap_ui_kit/ui-kit/boilerplate/page--ui-kit.html.example.twig' %}
+<p>
+  <small class="badge bg-info overflow-wrap-anywhere text-start"><em>{{ 'Example file: '|t ~ boilerplate_template }}</em></small>
+</p>
+<pre>
+<code class="language-twig">{{ fileGetContents([boilerplate_template]) }}</code>
+</pre>
+{% endblock %}
+

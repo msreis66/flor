@@ -1,0 +1,71 @@
+@use "sass:meta";
+@import "//fonts.googleapis.com/css2?family=Bowlby+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap";
+@import "@sjdc/global/src/scss/abstracts/variables";
+
+.ck {
+  &-content {
+    // Overrides.
+    // https://github.com/ckeditor/ckeditor5/issues/1142#issuecomment-1221497940
+
+    --ck-z-default: 100;
+    --ck-z-modal: calc(var(--ck-z-default) + 999);
+    --bs-border-radius-xxl: 2rem;
+    --bs-gray-700-rgb: #{$gray-700};
+    --bs-border-width: 1px;
+
+    // Theme components.
+    @include meta.load-css("@sjdc/global/src/scss/global");
+
+    .stretched-link::after {
+      content: unset;
+    }
+
+    [data-view-mode="ckeditor_embedded_video"] {
+      @extend .ratio;
+      @extend .ratio-16x9;
+    }
+
+    figcaption {
+      margin-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+      text-align: right;
+      border-bottom: 1px solid $gray-300 !important;
+    }
+  }
+
+  &-link_selected {
+    &.btn {
+      &-primary {
+        --ck-color-link-selected-background: #{$gold-darkest};
+
+        &:hover {
+          --ck-color-link-selected-background: #{$gold-darkest};
+        }
+      }
+
+      &-dark {
+        --ck-color-link-selected-background: #{$gray-700};
+
+        &:hover {
+          --ck-color-link-selected-background: #{$gray-800};
+        }
+      }
+
+      &-white {
+        --ck-color-link-selected-background: #{$white};
+
+        &:hover {
+          --ck-color-link-selected-background: #{$gray-100};
+        }
+      }
+
+      &-transparent {
+        --ck-color-link-selected-background: transparent;
+
+        &:hover {
+          --ck-color-link-selected-background: #{$white};
+        }
+      }
+    }
+  }
+}

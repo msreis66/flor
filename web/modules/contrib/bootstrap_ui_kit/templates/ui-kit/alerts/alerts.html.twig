@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Implements the Alerts tab content for the UI Kit.
+ *
+ * Displays usage of alerts within the theme.
+ */
+#}
+{% import '@bootstrap_ui_kit/ui-kit/' ~ section.id ~ '/' ~ section.id ~ '.macros.twig' as macros %}
+{% extends '@bootstrap_ui_kit/section.html.twig' %}
+
+{% block section_intro %}
+  {% trans %}
+    <p>Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.</p>
+  {% endtrans %}
+{% endblock %}
+
+{% block section_content %}
+  {{ macros.alert('primary', true) }}
+  {{ macros.alert('secondary', true) }}
+  {{ macros.alert('success', true) }}
+  {{ macros.alert('danger', true) }}
+  {{ macros.alert('warning', true) }}
+  {{ macros.alert('info', true) }}
+  {{ macros.alert('light', true) }}
+  {{ macros.alert('dark', true) }}
+{% endblock %}

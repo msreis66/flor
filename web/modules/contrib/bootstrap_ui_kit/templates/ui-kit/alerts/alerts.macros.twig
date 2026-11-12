@@ -1,0 +1,8 @@
+{# Alerts #}
+{% macro alert(style) %}
+  {% trans %}
+    <div class="alert alert-{{ style|lower }}" role="alert">
+      A simple {{ style|lower }} alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+    </div>
+  {% endtrans %}
+{% endmacro %}

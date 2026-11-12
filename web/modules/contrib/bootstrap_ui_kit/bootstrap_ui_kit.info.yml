@@ -1,0 +1,11 @@
+name: 'Bootstrap UI Kit'
+description: Adds a custom branded User interface kit inheriting styles from your theme.
+type: module
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+configure: bootstrap_ui_kit.settings
+package: 'User interface'
+
+# Information added by Drupal.org packaging script on 2025-09-18
+version: '1.0.6'
+project: 'bootstrap_ui_kit'
+datestamp: 1758237571

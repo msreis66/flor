@@ -1,0 +1,60 @@
+{{ attach_library('flor/header') }}
+
+<header class="position-sticky z-3 mb-5">
+
+  {% if page.header_top %}
+    <div class="bg-dark text-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            {{ page.header_top }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="bg-light">
+    <div class="container">
+
+      {% set nav_attributes = create_attribute() %}
+      {% set nav_classes = [
+        'navbar',
+        'navbar-expand-lg',
+        'align-items-lg-end',
+        'px-0',
+        'py-3',
+        'navbar-light',
+      ] %}
+
+      <nav {{ nav_attributes.addClass(nav_classes) }}>
+
+        {# logo - change if needs to be dynamic. #}
+        <a class="navbar-brand" href="{{ url('<front>') }}">
+          {% include '@flor/logo.svg' with {
+            logo_size: 200,
+            logo_color: 'var(--bs-black)',
+            start_color: '#2BB0FF',
+            stop_color: '#003E7A',
+            version: '7',
+            version_color: 'var(--bs-white)',
+            title: 'Site logo',
+          } %}
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          {% if page.navigation %}
+            <div class="ms-lg-auto">
+              {{ page.navigation }}
+            </div>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>

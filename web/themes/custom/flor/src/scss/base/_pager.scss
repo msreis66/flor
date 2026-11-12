@@ -1,0 +1,8 @@
+@import "@sjdc/global/src/scss/abstracts/scaffold";
+
+.pager__item {
+  &:not(&--next, &--previous) {
+    width: rem(44px);
+    height: rem(44px);
+  }
+}

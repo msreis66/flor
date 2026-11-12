@@ -1,0 +1,17 @@
+/**
+ * @file
+ * Admin styles.
+ */
+
+.messages {
+  .placeholder {
+    all: revert;
+  }
+}
+
+em.placeholder {
+  cursor: auto;
+  vertical-align: baseline;
+  opacity: 1;
+  background-color: unset;
+}

@@ -1,0 +1,75 @@
+<?php
+/**
+ * @file
+ * Install functions for the bootstrap_ui_kit module.
+ *
+ * Previous dev-only update hooks (9001 / 9002) have been merged into
+ * hook_install() because the module has not been released yet. This keeps
+ * the codebase clean while still migrating any legacy (early dev) glossary
+ * structure that might exist in a developer's database.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function bootstrap_ui_kit_install(): void {
+  $config_factory = \Drupal::configFactory();
+  $editable = $config_factory->getEditable('bootstrap_ui_kit.settings');
+  $glossary = $editable->get('glossary');
+
+  if (!is_array($glossary)) {
+    return; // Nothing to do; fresh install will import config/install YAML.
+  }
+
+  // Detect legacy (pre-nested) structure: group => [ section_key => section_def ].
+  $needs_migration = FALSE;
+  foreach ($glossary as $group_key => $group_value) {
+    if (is_array($group_value) && !array_key_exists('sections', $group_value)) {
+      // Looks like legacy definition needing conversion.
+      $needs_migration = TRUE;
+      break;
+    }
+  }
+  if (!$needs_migration) {
+    return; // Already in the new structure.
+  }
+
+  $migrated = [];
+  $weight_counter = 0;
+  foreach ($glossary as $group_key => $group_value) {
+    if (!is_array($group_value)) {
+      continue;
+    }
+    // If it already has sections, normalize keys and continue.
+    if (array_key_exists('sections', $group_value)) {
+      $migrated[$group_key] = [
+        'title' => $group_value['title'] ?? ucfirst(str_replace('_', ' ', $group_key)),
+        'weight' => (int) ($group_value['weight'] ?? $weight_counter),
+        'sections' => is_array($group_value['sections']) ? $group_value['sections'] : [],
+      ];
+      $weight_counter++;
+      continue;
+    }
+
+    // Legacy flat structure; convert each section.
+    $sections = [];
+    foreach ($group_value as $section_key => $section_def) {
+      if (!is_array($section_def)) {
+        continue;
+      }
+      $sections[$section_key] = [
+        'title' => $section_def['title'] ?? ucfirst(str_replace('_', ' ', $section_key)),
+        'modal' => (bool) ($section_def['modal'] ?? FALSE),
+        'weight' => (int) ($section_def['weight'] ?? 0),
+      ];
+    }
+    $migrated[$group_key] = [
+      'title' => ucfirst(str_replace('_', ' ', $group_key)),
+      'weight' => $weight_counter,
+      'sections' => $sections,
+    ];
+    $weight_counter++;
+  }
+
+  $editable->set('glossary', $migrated)->save();
+}

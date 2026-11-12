@@ -1,0 +1,13 @@
+.ping-pong-reset-edge {
+  .row:not(.flex-row-reverse) {
+    .align-content-center {
+      padding-right: 0;
+    }
+  }
+
+  .flex-row-reverse {
+    .align-content-center {
+      padding-left: 0;
+    }
+  }
+}

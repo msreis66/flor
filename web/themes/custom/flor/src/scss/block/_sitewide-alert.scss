@@ -1,0 +1,13 @@
+.sitewide-alert {
+  &.alert-text {
+    &-bg-teal-dark,
+    &-bg-green-darkest {
+      fill: $white;
+
+      .close {
+        opacity: 0.9 !important;
+        color: $white;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{% extends '@bootstrap_ui_kit/ui-kit/page--ui-kit.html.twig' %}
+
+{# Example glossary override. #}
+{% block page %}
+  {% set glossary = {
+    'new category': {
+      'banners': {
+        'title': 'Hero Banners',      // Friendly title for the section.
+        'path': 'theme_or_module',    // Machine name of your theme or module where the section exists.
+        'modal': 0,                   // Turn off the developer modal when dev mode is enabled.
+      },
+    },
+    'components': {                   // Example reordering above "foundations".
+      'accordions': {},
+      'buttons_links': {},
+    },
+    'foundations': {
+      'color': {
+        'modal': 0,
+      },
+    },
+  } %}
+  {{ parent() }}
+{% endblock %}

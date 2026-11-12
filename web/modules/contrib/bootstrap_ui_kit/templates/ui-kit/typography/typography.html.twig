@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Implements the Typography tab content for the UI Kit.
+ *
+ * Displays usage of typography within the theme.
+ */
+#}
+{% import '@bootstrap_ui_kit/ui-kit/' ~ section.id ~ '/' ~ section.id ~ '.macros.twig' as macros %}
+{% extends '@bootstrap_ui_kit/section.html.twig' %}
+
+{% block section_intro %}
+  <p>{{ 'This type scale is a range of contrasting styles that support the needs of the product and its content.'|t }}</p>
+{% endblock %}
+
+{% block section_content %}
+  {{ attach_library('bootstrap_ui_kit/bootstrap-ui-kit.typography') }}
+  {{ macros.heading_row('h1') }}
+  {{ macros.heading_row('h2') }}
+  {{ macros.heading_row('h3') }}
+  {{ macros.heading_row('h4') }}
+  {{ macros.heading_row('h5') }}
+  {{ macros.heading_row('h6') }}
+  <hr class="pb-5 mb-5 d-block border-top border-dark"/>
+  {{ macros.heading_row('h1', 'Display 1') }}
+  {{ macros.heading_row('h1', 'Display 2') }}
+  {{ macros.heading_row('h1', 'Display 3') }}
+  {{ macros.heading_row('h1', 'Display 4') }}
+  {{ macros.heading_row('h1', 'Display 5') }}
+  {{ macros.heading_row('h1', 'Display 6') }}
+{% endblock %}

@@ -1,0 +1,24 @@
+{
+  "name": "repo",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "*/{modules,themes}/custom/**/components/*"
+  ],
+  "packageManager": "npm@11.7.0",
+  "scripts": {
+    "build": "swat turbo build",
+    "build:production": "swat turbo build --production",
+    "watch": "swat turbo build --watch",
+    "lint": "swat lint",
+    "lint:fix": "swat lint --fix"
+  },
+  "devDependencies": {
+    "@imagexmedia/cli": "*",
+    "@imagexmedia/eslint": "*",
+    "@imagexmedia/stylelint": "*",
+    "@imagexmedia/turbo": "*",
+    "@imagexmedia/typescript": "*",
+    "@imagexmedia/vite": "*"
+  }
+}

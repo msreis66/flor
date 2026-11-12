@@ -1,0 +1,63 @@
+@import "@sjdc/global/src/scss/abstracts/scaffold";
+
+.person {
+  &--personal-info-bg {
+    min-height: 90%;
+  }
+
+  &-photo {
+    position: relative;
+
+    img {
+      width: rem(235px);
+      border-radius: 50%;
+
+      @include media-breakpoint-up(lg) {
+        width: auto;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex: rem(0 0 316px);
+      width: auto;
+    }
+  }
+
+  &--department-info {
+    row-gap: rem(30px);
+
+    .term--area-of-study-trac {
+      &--background {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: rem(50px);
+        height: rem(50px);
+        border-radius: 50%;
+
+        @include media-breakpoint-up(lg) {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  &--courses {
+    ul {
+      ::marker {
+        font-size: small;
+      }
+    }
+  }
+}
+
+.contact-information {
+  background-color: rgba($gray-100, 0.5);
+
+  .office,
+  .email {
+    a {
+      color: $gray-700;
+    }
+  }
+}

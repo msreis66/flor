@@ -1,0 +1,30 @@
+@use "sass:map";
+
+// Add mixins to this file.
+// see: node_modules/bootstrap/scss/_variables.scss
+// see: node_modules/bootstrap/scss/mixins/_container.scss
+
+@mixin container-spacing($property) {
+  #{$property}: rem($grid-gutter-width * 0.5);
+
+  @media (width >= 1332px) {
+    #{$property}: $container-spacing;
+  }
+}
+
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+.line-clamp-base {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin line-clamp($lines) {
+  @extend .line-clamp-base;
+
+  -webkit-line-clamp: $lines;
+}

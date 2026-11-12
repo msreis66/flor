@@ -1,0 +1,77 @@
+# Use DDEV images, utilizing ENV Vars for versions.
+image:
+  name: ddev/ddev-webserver:v1.24.4
+
+# =========================================================
+#   Script Definitions
+#   - Do not edit this section.
+# =========================================================
+script_definitions:
+  - &env-setup |
+    export PHP_VERSION=$(yq '.php_version // "8.4"' .ddev/config.yaml) && \
+    export COMPOSER_VERSION=$(yq '.composer_version // "2.8.8"' .ddev/config.yaml) && \
+    export NODE_VERSION=$(yq '.nodejs_version // "22"' .ddev/config.yaml) && \
+    export BIN_DIR=$BITBUCKET_CLONE_DIR/vendor/bin && \
+    source ~/.profile && \
+    git config --global --add safe.directory /opt/atlassian/pipelines/agent/build && \
+    ln -sf /usr/bin/php${PHP_VERSION} /usr/bin/php && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
+    ln -sf /usr/bin/node /usr/local/bin/node && \
+    ln -sf /usr/bin/npm /usr/local/bin/npm && \
+    composer self-update ${COMPOSER_VERSION}
+  - &composer-tasks
+    composer install --no-interaction --optimize-autoloader
+
+# =========================================================
+#   Step Definitions
+#   - Only edit this section to customize your pipeline.
+# =========================================================
+step_definitions:
+  - validate: &validate
+      name: 'Validation Tasks.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - ${BIN_DIR}/swat validate --no-interaction
+  - deploy-branch: &deploy-branch
+      name: 'Deploy branch to remote.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - ${BIN_DIR}/swat -vvv artifact:deploy --commit-msg "Bitbucket build - $BITBUCKET_BUILD_NUMBER, Commit $BITBUCKET_COMMIT" --branch "$BITBUCKET_BRANCH" --no-interaction
+  - deploy-tag: &deploy-tag
+      name: 'Deploy tag to remote.'
+      caches:
+        - composer
+      script:
+        - *env-setup
+        - *composer-tasks
+        - ${BIN_DIR}/swat -vvv artifact:deploy --commit-msg "Bitbucket release $BITBUCKET_TAG." --tag "$BITBUCKET_TAG"
+
+# =========================================================
+#   Pipeline Definitions
+#   - Edit this section based on your project workflow.
+# =========================================================
+pipelines:
+  pull-requests:
+    '**':
+      - step: *validate
+  branches:
+    master:
+      - step: *validate
+      - step: *deploy-branch
+    stage:
+      - step: *validate
+      - step: *deploy-branch
+    production:
+      - step: *validate
+      - step: *deploy-branch
+  tags:
+    '**':
+      - step: *validate
+      - step: *deploy-tag

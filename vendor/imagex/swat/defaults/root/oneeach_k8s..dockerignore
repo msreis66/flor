@@ -1,0 +1,10 @@
+# .dockerignore
+node_modules
+# Ignore all of ddev files except cron and config
+*/.ddev*
+!*/.ddev/web-build/*.cron
+!*/.ddev/config.yaml
+# Ignore git files
+*.git*
+# Ignore settings.ddev.php files
+settings.ddev.php

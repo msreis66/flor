@@ -1,0 +1,10 @@
+{
+  "name": "@theme/global",
+  "type": "module",
+  "scripts": {
+    "build": "swat build"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  }
+}

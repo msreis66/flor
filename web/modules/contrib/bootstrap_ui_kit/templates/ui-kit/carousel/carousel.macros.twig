@@ -1,0 +1,45 @@
+{# Carousels #}
+{% macro carousel(style, friendly_name, numItems = 3) %}
+  {% set randomInt = random(0, 100) %}
+  {% set initialIndex = 0 %}
+  {% set numItemsIndex = numItems - 1 %}
+
+  {# Force hide if we pass an value. #}
+  {% if friendly_name != ' ' %}
+  <p><strong>{{ friendly_name ? friendly_name : style|lower|capitalize ~ ' controls' }}</strong></p>
+  {% endif %}
+
+  <div id="carouselExample{{ randomInt }}" class="carousel carousel-{{ style|lower }} slide">
+    <div class="carousel-indicators">
+      {% for i in initialIndex..numItemsIndex %}
+        {% set aria_current = loop.first ? 'true' : 'false' %}
+        {% set class_list = [
+          'slide',
+          loop.first ? 'active',
+        ] %}
+        <button type="button" data-bs-target="#carouselExample{{ randomInt }}" data-bs-slide-to="{{ i }}" class="{{ class_list|join(' ') }}" aria-current="{{ aria_current }}" aria-label="{{ 'Slide @number'|t({'@number': i}) }}"></button>
+      {% endfor %}
+    </div>
+    <div class="carousel-inner">
+
+      {% for i in initialIndex..numItemsIndex %}
+      <div class="carousel-item{{ loop.first ? ' active' }}" data-bs-interval="10000">
+        <img src="https://picsum.photos/seed/picsum{{ randomInt + loop.index }}/800/500?blur=7&grayscale=1" class="d-block w-100" alt="https://picsum.photos/seed/picsum/800/500?blur=2">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ 'Slide #'|t ~ loop.index ~ ' label' }}</h5>
+          <p>{{ 'Some representative placeholder content for the slide.'|t }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ randomInt }}" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">{{ 'Previous'|t }}</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ randomInt }}" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">{{ 'Next'|t }}</span>
+    </button>
+  </div>
+{% endmacro %}
